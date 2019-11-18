@@ -1,0 +1,26 @@
+.background{
+	-fx-background-color: white;
+}
+
+.title-image{
+    -fx-image: url("../image/draw_something_logo.png");
+}
+
+.button-proceed{
+    -fx-background-color: #32CD32;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+.button-proceed:hover{
+    -fx-background-color: #28a428 ;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+.button-proceed:pressed{
+    -fx-background-color:  #1e7b1e ;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
