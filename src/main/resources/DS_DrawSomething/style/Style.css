@@ -6,21 +6,49 @@
     -fx-image: url("../image/draw_something_logo.png");
 }
 
+.transparent-background{
+    -fx-background-color: black;
+    -fx-opacity: 0.5;
+}
+
+. background-border{
+    -fx-border-color: black ;
+    -fx-border-width: 2;
+}
+
+//buttons for proceeding to next page or opening stuff?
+.button-text{
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+
 .button-proceed{
     -fx-background-color: #32CD32;
-    -fx-text-fill: white;
-    -fx-font-size: 15px;
 }
 
 .button-proceed:hover{
     -fx-background-color: #28a428 ;
-    -fx-text-fill: white;
-    -fx-font-size: 15px;
 }
 
 .button-proceed:pressed{
     -fx-background-color:  #1e7b1e ;
-    -fx-text-fill: white;
-    -fx-font-size: 15px;
 }
 
+//button for refreshing the lobby list
+.button-refresh-img{
+    -fx-background-image: url("../image/refresh-32.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 60% 70%;
+    -fx-background-position: center;
+}
+.button-red{
+    -fx-background-color: #ff4000;
+}
+
+.button-red:hover{
+    -fx-background-color: #cc3300;
+}
+
+.button-red:pressed{
+    -fx-background-color: #992600;
+}
