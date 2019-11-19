@@ -2,18 +2,28 @@
 	-fx-background-color: white;
 }
 
-.title-image{
-    -fx-image: url("../image/draw_something_logo.png");
-}
-
 .transparent-background{
     -fx-background-color: black;
     -fx-opacity: 0.5;
 }
 
+.grey-background{
+    -fx-background-color: #808080;
+}
+
+.light-grey-background{
+    -fx-background-color: #C0C0C0;
+}
+
+
+
+.title-image{
+    -fx-image: url("../image/draw_something_logo.png");
+}
+
 . background-border{
     -fx-border-color: black ;
-    -fx-border-width: 2;
+    -fx-border-width: 1;
 }
 
 //buttons for proceeding to next page or opening stuff?

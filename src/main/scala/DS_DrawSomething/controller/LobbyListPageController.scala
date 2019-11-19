@@ -12,13 +12,13 @@ import scalafxml.core.macros.sfxml
 //private val spinnerPlayerNo:Spinner[],
 
 @sfxml
-class LobbyListPage (private val btnCreateLobbyPopUp:Button,
-                     private val btnRefresh:Button,
-                     private val stackPanePopUpBackground:StackPane,
-                     private val panePopUpBackground:Pane,
-                     private val btnClosePopUp:Button,
-                     private val txtLobbyBane:TextField,
-                     private val btnCreateRoom:Button
+class LobbyListPageController(private val btnCreateLobbyPopUp:Button,
+                              private val btnRefresh:Button,
+                              private val stackPanePopUpBackground:StackPane,
+                              private val panePopUpBackground:Pane,
+                              private val btnClosePopUp:Button,
+                              private val txtLobbyBane:TextField,
+                              private val btnCreateRoom:Button
                     )
 {
 
