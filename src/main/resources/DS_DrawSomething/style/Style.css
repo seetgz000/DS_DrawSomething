@@ -62,3 +62,10 @@
 .button-red:pressed{
     -fx-background-color: #992600;
 }
+
+//chat box css (Ah tung add anything you want here)
+
+.chat-text{
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
+}
