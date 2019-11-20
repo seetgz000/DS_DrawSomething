@@ -12,7 +12,7 @@
 }
 
 .light-grey-background{
-    -fx-background-color: #C0C0C0;
+    -fx-background-color: #f2f2f2;
 }
 
 
@@ -60,6 +60,35 @@
     -fx-background-size: 60% 70%;
     -fx-background-position: center;
 }
+
+//button for paint toolbar
+.button-brush-img {
+        -fx-background-image: url("../image/paint-brush-32.png");
+        -fx-background-repeat: no-repeat;
+        -fx-background-size: 90% 90%;
+        -fx-background-position: center;
+}
+
+.button-eraser-img {
+        -fx-background-image: url("../image/eraser-32.png");
+        -fx-background-repeat: no-repeat;
+        -fx-background-size: 80% 80%;
+        -fx-background-position: center;
+}
+
+//paint button at side
+.button-toolbar {
+    -fx-background-color: linear-gradient(#d9d9d9, #a6a6a6);
+    -fx-border-size: 1px;
+    -fx-border-color: black;
+}
+
+.button-toolbar:focused {
+    -fx-background-color: linear-gradient(#a6a6a6,#d9d9d9);
+}
+
+
+//for exiting page
 .button-red{
     -fx-background-color: #ff4000;
 }
@@ -86,8 +115,11 @@
 }
 
 //chat box css (Ah tung add anything you want here)
-
 .chat-text{
     -fx-text-fill: black;
     -fx-font-size: 20px;
+    -fx-background-insets: 0,1,1;
+    -fx-border-size: 1px;
+    -fx-border-color: black;
+    -fx-border-radius: 10 10 10 0;
 }

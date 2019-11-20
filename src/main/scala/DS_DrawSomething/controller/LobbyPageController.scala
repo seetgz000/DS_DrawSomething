@@ -3,7 +3,7 @@ package DS_DrawSomething.controller
 import DS_DrawSomething.Main
 import scalafx.geometry.Insets
 import scalafx.scene.control.{Button, Label, TextArea}
-import scalafx.scene.layout.{FlowPane, VBox}
+import scalafx.scene.layout.{FlowPane, HBox, VBox}
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
 
@@ -29,11 +29,17 @@ class LobbyPageController (private val lblLobbyName:Label,
 
   def createChatBubble(): Unit ={
     if (! txtChat.getText.isEmpty) {
+      val borderHBox = new HBox(){
+        padding = Insets(5, 10, 5, 10)
+      }
+      borderHBox.maxWidth = 340
 
       val chatText = new Text(txtChat.getText)
-      chatText.wrappingWidthProperty.set(375)
-      chatText.getStyleClass.add("chat-text")
-      vBoxChat.getChildren.add(chatText)
+
+      borderHBox.getChildren.add(chatText)
+      chatText.wrappingWidthProperty.set(340)
+      borderHBox.getStyleClass.add("chat-text")
+      vBoxChat.getChildren.add(borderHBox)
     }
   }
 
