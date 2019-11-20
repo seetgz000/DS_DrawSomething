@@ -4,7 +4,7 @@ import javafx.event
 import javafx.event.EventHandler
 import scalafx.scene.paint.Color
 import scalafx.scene.canvas.Canvas
-import scalafx.scene.control.{Button, ColorPicker, Label, ProgressIndicator, TextArea, TextField, ToggleButton, ToggleGroup}
+import scalafx.scene.control.{Button, ColorPicker, Label, ProgressIndicator, Slider, TextArea, TextField, ToggleButton, ToggleGroup}
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.{FlowPane, VBox}
 import scalafxml.core.macros.sfxml
@@ -30,7 +30,8 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val btnKickPlayer: Button,
                           private val btnPen: Button,
                           private val btnEraser: Button,
-                          private val colorPicker: ColorPicker) {
+                          private val colorPicker: ColorPicker,
+                          private val sliderSize: Slider) {
 
 
   val gc = canvasPaint.graphicsContext2D
@@ -68,6 +69,7 @@ class GamePageController( //at top  of page, show current round of game and the 
   canvasPaint.onMouseClicked() = (e: MouseEvent) => {
     eraserAndReset(e)
   }
+
 
 
 

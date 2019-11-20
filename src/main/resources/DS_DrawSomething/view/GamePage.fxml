@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
@@ -15,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -25,13 +19,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DS_DrawSomething.controller.GamePageController">
+<BorderPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DS_DrawSomething.controller.GamePageController">
    <right>
       <VBox prefHeight="608.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <ScrollPane prefHeight="490.0" prefWidth="300.0">
                <content>
-                  <VBox fx:id="vBoxGameChat" prefHeight="640.0" prefWidth="280.0" />
+                  <VBox fx:id="vBoxGameChat" prefHeight="483.0" prefWidth="280.0" />
                </content>
             </ScrollPane>
             <HBox prefHeight="100.0" prefWidth="300.0">
@@ -84,6 +78,11 @@
                         <Insets left="15.0" right="15.0" top="10.0" />
                      </FlowPane.margin>
                   </ColorPicker>
+                  <Slider fx:id="sliderSize">
+                     <FlowPane.margin>
+                        <Insets left="15.0" right="15.0" top="10.0" />
+                     </FlowPane.margin>
+                  </Slider>
                </children></FlowPane>
          </children>
       </VBox>
