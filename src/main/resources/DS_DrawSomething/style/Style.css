@@ -121,5 +121,9 @@
     -fx-background-insets: 0,1,1;
     -fx-border-size: 1px;
     -fx-border-color: black;
+<<<<<<< HEAD
     -fx-padding : 0 0 0 2em;
+=======
+    -fx-border-radius: 10 10 10 0;
+>>>>>>> b4024b388acd087aa637c3e24fb6b98a0303a46d
 }

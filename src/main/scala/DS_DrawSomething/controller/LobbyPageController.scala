@@ -29,7 +29,13 @@ class LobbyPageController (private val lblLobbyName:Label,
 
   def createChatBubble(): Unit ={
     if (! txtChat.getText.isEmpty) {
+<<<<<<< HEAD
       val borderHBox = new HBox()
+=======
+      val borderHBox = new HBox(){
+        padding = Insets(5, 10, 5, 10)
+      }
+>>>>>>> b4024b388acd087aa637c3e24fb6b98a0303a46d
       borderHBox.maxWidth = 340
 
       val chatText = new Text(txtChat.getText)
