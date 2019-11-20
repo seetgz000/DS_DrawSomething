@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
@@ -44,14 +45,39 @@
       </VBox>
    </right>
    <left>
-      <VBox prefHeight="565.0" prefWidth="171.0" styleClass="light-grey-background" BorderPane.alignment="CENTER">
+      <VBox prefHeight="565.0" prefWidth="171.0" styleClass="light-grey-background" BorderPane.alignment="TOP_CENTER">
          <children>
             <ProgressIndicator fx:id="piTimer" maxHeight="400.0" maxWidth="166.0" prefHeight="122.0" prefWidth="166.0" progress="0.0">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </ProgressIndicator>
-            <FlowPane fx:id="flowPanePaintToolbar" prefHeight="360.0" prefWidth="274.0" />
+            <FlowPane fx:id="flowPanePaintToolbar" columnHalignment="CENTER" prefHeight="360.0" prefWidth="274.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
+                     <FlowPane.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </FlowPane.margin>
+                     <styleClass>
+                        <String fx:value="button-brush-img" />
+                        <String fx:value="button-toolbar" />
+                     </styleClass>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
+                     <FlowPane.margin>
+                        <Insets />
+                     </FlowPane.margin>
+                     <styleClass>
+                        <String fx:value="button-eraser-img" />
+                        <String fx:value="button-toolbar" />
+                     </styleClass>
+                  </Button>
+                  <ColorPicker prefHeight="26.0" prefWidth="135.0">
+                     <FlowPane.margin>
+                        <Insets left="15.0" right="15.0" top="10.0" />
+                     </FlowPane.margin>
+                  </ColorPicker>
+               </children></FlowPane>
          </children>
       </VBox>
    </left>
@@ -102,9 +128,9 @@
       </StackPane>
    </bottom>
    <center>
-      <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" styleClass="background-border" BorderPane.alignment="CENTER">
+      <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Canvas fx:id="canvasPaint" height="589.0" width="1029.0" />
+            <Canvas fx:id="canvasPaint" height="585.0" width="1029.0" />
             <Button fx:id="btnKickPlayer" mnemonicParsing="false" prefHeight="42.0" prefWidth="62.0" text="Kick" StackPane.alignment="TOP_LEFT" />
          </children>
       </StackPane>
