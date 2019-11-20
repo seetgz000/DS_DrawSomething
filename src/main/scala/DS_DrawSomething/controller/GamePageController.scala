@@ -1,11 +1,9 @@
 package DS_DrawSomething.controller
 
-import javafx.event
-import javafx.event.EventHandler
 import scalafx.scene.paint.Color
 import scalafx.scene.canvas.Canvas
 import scalafx.scene.control.{Button, ColorPicker, Label, ProgressIndicator, Slider, TextArea, TextField, ToggleButton, ToggleGroup}
-import scalafx.scene.input.MouseEvent
+import scalafx.scene.input.{DragEvent, MouseEvent, ScrollEvent}
 import scalafx.scene.layout.{FlowPane, VBox}
 import scalafxml.core.macros.sfxml
 import scalafx.Includes._
@@ -31,13 +29,20 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val btnPen: Button,
                           private val btnEraser: Button,
                           private val colorPicker: ColorPicker,
-                          private val sliderSize: Slider) {
+                          private val sliderToolSize: Slider,
+                          private val lblToolSize: Label) {
 
 
   val gc = canvasPaint.graphicsContext2D
-  val penSize = 5
-  val penCoordinate = penSize / 2
+  sliderToolSize.value = 5 //set default tool size to 5
+  var toolSize = sliderToolSize.value.toInt
+  lblToolSize.text = toolSize.toString
+  var penSize = toolSize
+  var penCoordinate = penSize / 2
+  var eraserSize = toolSize
+  var eraserCoordinate = eraserSize / 2
   var paintTool = "pen"
+  colorPicker.value = Color.Black
   gc.fill = Color.Black
 
 
@@ -46,11 +51,21 @@ class GamePageController( //at top  of page, show current round of game and the 
   btnKickPlayer.setCursor(Cursor.Hand)
   btnGameSubmitChat.setCursor(Cursor.Hand)
 
+  sliderToolSize.valueProperty.addListener{ (o: javafx.beans.value.ObservableValue[_ <: Number], oldVal: Number, newVal: Number) =>
+    changeToolSize(sliderToolSize.value.toInt, paintTool)
+  }
+
+  //When clicked change to pen tool
   btnPen.onMouseClicked() = (e: MouseEvent) => {
     paintTool = "pen"
+    sliderToolSize.value = penSize
+    changeToolSize(sliderToolSize.value.toInt, paintTool)
   }
+  //When clicked change to eraser tool
   btnEraser.onMouseClicked() = (e: MouseEvent) => {
     paintTool = "eraser"
+    sliderToolSize.value = eraserSize
+    changeToolSize(sliderToolSize.value.toInt, paintTool)
   }
 
   colorPicker.onAction = (e: ActionEvent) => {
@@ -67,7 +82,11 @@ class GamePageController( //at top  of page, show current round of game and the 
 
   // Fill the Canvas with a Blue rectangle when the user double-clicks
   canvasPaint.onMouseClicked() = (e: MouseEvent) => {
-    eraserAndReset(e)
+    if (paintTool == "pen"){
+      drawCanvas(e)
+    } else if (paintTool == "eraser") {
+      eraser(e)
+    }
   }
 
 
@@ -80,31 +99,34 @@ class GamePageController( //at top  of page, show current round of game and the 
 
   // Clear away portions as the user drags the mouse
   def eraser(e: MouseEvent): Unit = {
-    gc.clearRect(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize)
+    gc.clearRect(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
   }
 
-  // Fill the Canvas with a Blue rectangle when the user double-clicks
-  def eraserAndReset(e: MouseEvent): Unit = {
-    if (e.clickCount > 1) {
-      resetCanvas(Color.Blue)
-    } else {
-      gc.fillRoundRect(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
-    }
-  }
-
+  // Fill the Canvas with a White rectangle for reset
   def reset: Unit = {
-      resetCanvas(Color.Red)
+      resetCanvas(Color.White)
   }
 
   /**
    * Resets the canvas to its original look by filling in a rectangle covering
-   * its entire width and height. Color.Blue is used in this demo.
    *
    * @param color The color to fill
    */
   private def resetCanvas(color: Color): Unit = {
     gc.fill = color
     gc.fillRect(0, 0, canvasPaint.width.get, canvasPaint.height.get)
+  }
+
+  def changeToolSize(size: Int, paintTool: String): Unit = {
+    toolSize = size
+    lblToolSize.text = toolSize.toString
+    if (paintTool == "pen") {
+      penSize = toolSize
+      penCoordinate = penSize / 2
+    } else if (paintTool == "eraser"){
+      eraserSize = toolSize
+      eraserCoordinate = eraserSize / 2
+    }
   }
 
 }
