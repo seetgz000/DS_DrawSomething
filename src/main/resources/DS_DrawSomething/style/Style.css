@@ -72,6 +72,19 @@
     -fx-background-color: #992600;
 }
 
+//button for submitting
+.button-blue{
+    -fx-background-color : #1e90ff;
+}
+
+.button-blue: hover{
+    -fx-background-color : #0080ff;
+}
+
+.button-blue: pressed{
+    -fx-background-color : #0066cc;
+}
+
 //chat box css (Ah tung add anything you want here)
 
 .chat-text{

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -32,6 +33,10 @@
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <styleClass>
+                        <String fx:value="button-blue" />
+                        <String fx:value="button-text" />
+                     </styleClass>
                   </Button>
                </children>
             </HBox>
