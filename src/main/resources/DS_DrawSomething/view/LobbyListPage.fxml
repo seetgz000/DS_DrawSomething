@@ -28,10 +28,14 @@
                <children>
                   <BorderPane maxWidth="486.0" prefHeight="39.0" prefWidth="486.0">
                      <right>
-                        <Button fx:id="btnClosePopUp" mnemonicParsing="false" onAction="#closePopUp" prefHeight="34.0" prefWidth="34.0" text="Close" BorderPane.alignment="CENTER">
+                        <Button fx:id="btnClosePopUp" mnemonicParsing="false" onAction="#closePopUp" prefHeight="34.0" prefWidth="34.0" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin>
+                           <styleClass>
+                              <String fx:value="button-red" />
+                              <String fx:value="button-close-img" />
+                           </styleClass>
                         </Button>
                      </right>
                   </BorderPane>
@@ -98,10 +102,14 @@
                         <Insets top="40.0" />
                      </VBox.margin>
                   </HBox>
-                  <Button fx:id="btnCreateRoom" alignment="CENTER" mnemonicParsing="false" prefHeight="39.0" prefWidth="432.0" text="Create room">
+                  <Button fx:id="btnCreateRoom" alignment="CENTER" mnemonicParsing="false" onAction="#goToLobbyPage" prefHeight="39.0" prefWidth="432.0" text="Create room">
                      <VBox.margin>
                         <Insets top="50.0" />
                      </VBox.margin>
+                     <styleClass>
+                        <String fx:value="button-proceed" />
+                        <String fx:value="button-text" />
+                     </styleClass>
                   </Button>
                </children>
             </VBox>
@@ -144,6 +152,12 @@
                            <styleClass>
                               <String fx:value="button-refresh-img" />
                               <String fx:value="button-red" />
+                           </styleClass>
+                        </Button>
+                        <Button fx:id="btnQuitGame" mnemonicParsing="false" onAction="#goToMainPage" prefHeight="40.0" prefWidth="242.0" text="Quit game" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <styleClass>
+                              <String fx:value="button-red" />
+                              <String fx:value="button-text" />
                            </styleClass>
                         </Button>
                      </children>

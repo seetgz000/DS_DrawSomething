@@ -9,7 +9,7 @@ import scalafx.Includes._
 
 object Main extends JFXApp{
 
-  val rootResource = getClass.getResourceAsStream("view/LobbyPage.fxml")
+  val rootResource = getClass.getResourceAsStream("view/MainPage.fxml")
   val loader = new FXMLLoader(null,NoDependencyResolver)
   loader.load(rootResource)
 
@@ -62,6 +62,15 @@ object Main extends JFXApp{
     stage.scene().setRoot(rootNode)
   }
 
+  //go to lobby page
+  def goToLobbyPage(): Unit = {
+    val resource = getClass.getResourceAsStream("view/LobbyPage.fxml")
+    val loader = new FXMLLoader(null, NoDependencyResolver)
 
+    loader.load(resource)
+
+    val rootNode:scalafx.scene.layout.BorderPane = loader.getRoot[javafx.scene.layout.BorderPane]()
+    stage.scene().setRoot(rootNode)
+  }
 
 }

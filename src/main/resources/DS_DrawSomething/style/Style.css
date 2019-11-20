@@ -32,6 +32,15 @@
     -fx-font-size: 18px;
 }
 
+//for any close buttons
+.button-close-img{
+    -fx-background-image: url("../image/close-white-32.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 70% 70%;
+    -fx-background-position: center;
+}
+
+//any button that goes to another page
 .button-proceed{
     -fx-background-color: #32CD32;
 }

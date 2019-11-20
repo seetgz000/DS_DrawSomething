@@ -1,5 +1,6 @@
 package DS_DrawSomething.controller
 
+import DS_DrawSomething.Main
 import scalafx.scene.control.{Button, ComboBox, Spinner, TableView, TextField}
 import scalafx.scene.control.TableView.TableViewSelectionModel
 import scalafx.scene.layout.{Pane, StackPane}
@@ -18,9 +19,18 @@ class LobbyListPageController(private val btnCreateLobbyPopUp:Button,
                               private val panePopUpBackground:Pane,
                               private val btnClosePopUp:Button,
                               private val txtLobbyBane:TextField,
-                              private val btnCreateRoom:Button
+                              private val btnCreateRoom:Button,
+                              private val btnQuitGame: Button
                     )
 {
+
+  def goToLobbyPage(): Unit ={
+    Main.goToLobbyPage()
+  }
+
+  def goToMainPage(): Unit ={
+    Main.goToMainPage()
+  }
 
   def openPopUp(): Unit ={
     stackPanePopUpBackground.toFront()
