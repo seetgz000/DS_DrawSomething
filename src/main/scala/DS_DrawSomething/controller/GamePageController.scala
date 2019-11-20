@@ -1,8 +1,10 @@
 package DS_DrawSomething.controller
 
+import javafx.event
+import javafx.event.EventHandler
 import scalafx.scene.paint.Color
 import scalafx.scene.canvas.Canvas
-import scalafx.scene.control.{Button, Label, ProgressIndicator, TextArea, TextField}
+import scalafx.scene.control.{Button, ColorPicker, Label, ProgressIndicator, TextArea, TextField, ToggleButton, ToggleGroup}
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.{FlowPane, VBox}
 import scalafxml.core.macros.sfxml
@@ -27,20 +29,39 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val canvasPaint:Canvas,
                           private val btnKickPlayer: Button,
                           private val btnPen: Button,
-                          private val btnEraser: Button) {
+                          private val btnEraser: Button,
+                          private val colorPicker: ColorPicker) {
 
 
   val gc = canvasPaint.graphicsContext2D
   val penSize = 5
   val penCoordinate = penSize / 2
+  var paintTool = "pen"
+  gc.fill = Color.Black
+
 
   btnPen.setCursor(Cursor.Hand)
   btnEraser.setCursor(Cursor.Hand)
   btnKickPlayer.setCursor(Cursor.Hand)
   btnGameSubmitChat.setCursor(Cursor.Hand)
 
+  btnPen.onMouseClicked() = (e: MouseEvent) => {
+    paintTool = "pen"
+  }
+  btnEraser.onMouseClicked() = (e: MouseEvent) => {
+    paintTool = "eraser"
+  }
+
+  colorPicker.onAction = (e: ActionEvent) => {
+    gc.fill = colorPicker.getValue()
+  }
+
   canvasPaint.onMouseDragged() = (e: MouseEvent) => {
-    drawCanvas(e)
+    if (paintTool == "pen"){
+      drawCanvas(e)
+    } else if (paintTool == "eraser") {
+      eraser(e)
+    }
   }
 
   // Fill the Canvas with a Blue rectangle when the user double-clicks
@@ -48,9 +69,10 @@ class GamePageController( //at top  of page, show current round of game and the 
     eraserAndReset(e)
   }
 
+
+
   // Draw line as the user drags the mouse
   def drawCanvas(e: MouseEvent): Unit = {
-    gc.fill = Color.Black
     gc.fillRoundRect(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
   }
 
