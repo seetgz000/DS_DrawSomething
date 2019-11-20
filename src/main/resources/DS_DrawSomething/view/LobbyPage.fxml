@@ -87,6 +87,10 @@
                      <font>
                         <Font size="18.0" />
                      </font>
+                     <styleClass>
+                        <String fx:value="button-blue" />
+                        <String fx:value="button-text" />
+                     </styleClass>
                   </Button>
                </children>
             </HBox>

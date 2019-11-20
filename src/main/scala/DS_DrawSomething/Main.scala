@@ -25,6 +25,7 @@ object Main extends JFXApp{
 
   //ensure it is always maximized
   stage.setMaximized(true)
+  stage.setTitle("Draw something")
 
 
   //go to lobby list page
