@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
@@ -26,32 +19,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DS_DrawSomething.controller.GamePageController">
-   <right>
-      <VBox prefHeight="608.0" prefWidth="300.0" BorderPane.alignment="CENTER">
-         <children>
-            <ScrollPane prefHeight="490.0" prefWidth="300.0">
-               <content>
-                  <VBox fx:id="vBoxGameChat" prefHeight="483.0" prefWidth="280.0" />
-               </content>
-            </ScrollPane>
-            <HBox prefHeight="100.0" prefWidth="300.0">
-               <children>
-                  <TextArea fx:id="txtGameChat" maxHeight="200.0" prefHeight="98.0" prefWidth="267.0" />
-                  <Button fx:id="btnGameSubmitChat" mnemonicParsing="false" prefHeight="98.0" prefWidth="132.0" text="Submit">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <styleClass>
-                        <String fx:value="button-blue" />
-                        <String fx:value="button-text" />
-                     </styleClass>
-                  </Button>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </right>
+<BorderPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DS_DrawSomething.controller.GamePageController">
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="565.0" prefWidth="171.0" styleClass="light-grey-background" BorderPane.alignment="TOP_CENTER">
          <children>
@@ -100,9 +68,9 @@
       </VBox>
    </left>
    <top>
-      <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" styleClass="grey-background" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="63.0" styleClass="grey-background" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="64.0" prefWidth="1513.0" styleClass="grey-background" StackPane.alignment="TOP_LEFT">
+            <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="54.0" prefWidth="1500.0" styleClass="grey-background" StackPane.alignment="TOP_LEFT">
                <left>
                   <Label fx:id="lblGameRounds" text="Round 1 of 3" textFill="WHITE" BorderPane.alignment="CENTER">
                      <font>
@@ -125,12 +93,12 @@
       </StackPane>
    </top>
    <bottom>
-      <StackPane prefHeight="144.0" prefWidth="1500.0" BorderPane.alignment="CENTER">
+      <StackPane prefWidth="1500.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
-            <AnchorPane prefHeight="171.0" styleClass="transparent-background" />
-            <HBox prefHeight="171.0" prefWidth="1500.0">
+            <AnchorPane styleClass="transparent-background" />
+            <HBox prefWidth="1500.0">
                <children>
-                  <HBox fx:id="vBoxPlayers" prefHeight="174.0" HBox.hgrow="ALWAYS">
+                  <HBox fx:id="vBoxPlayers" prefHeight="16.0" prefWidth="1500.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="150.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
                         <Label prefHeight="76.0" prefWidth="646.0" text="&lt;- for scale of players name, later add dynamically at controlller">
@@ -148,9 +116,34 @@
    <center>
       <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Canvas fx:id="canvasPaint" height="585.0" width="1029.0" />
             <Button fx:id="btnKickPlayer" mnemonicParsing="false" prefHeight="42.0" prefWidth="62.0" text="Kick" StackPane.alignment="TOP_LEFT" />
+            <Canvas fx:id="canvasPaint" height="585.0" width="1029.0" />
          </children>
       </StackPane>
    </center>
+   <right>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="565.0" prefWidth="300.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <ScrollPane prefHeight="1000.0" prefWidth="300.0">
+               <content>
+                  <VBox fx:id="vBoxGameChat" maxHeight="900.0" prefHeight="450.0" prefWidth="280.0" />
+               </content>
+            </ScrollPane>
+            <HBox fillHeight="false" minHeight="97.0" prefWidth="300.0">
+               <children>
+                  <TextArea fx:id="txtGameChat" prefHeight="97.0" prefWidth="218.0" />
+                  <Button fx:id="btnGameSubmitChat" mnemonicParsing="false" prefHeight="97.0" prefWidth="132.0" text="Submit">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="button-blue" />
+                        <String fx:value="button-text" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </right>
 </BorderPane>
