@@ -9,7 +9,7 @@ import scalafx.Includes._
 
 object Main extends JFXApp{
 
-  val rootResource = getClass.getResourceAsStream("view/GamePage.fxml")
+  val rootResource = getClass.getResourceAsStream("view/MainPage.fxml")
   val loader = new FXMLLoader(null,NoDependencyResolver)
   loader.load(rootResource)
 
