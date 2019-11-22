@@ -1,16 +1,8 @@
 package DS_DrawSomething
 
-import akka.actor.{Actor, ActorSelection}
-import akka.util.Timeout
+import java.net.Socket
 
-import scala.concurrent.duration._
+object Client extends App {
+  var client = new Socket( "127.0.0.1", 6000 )
 
-class Client extends Actor {
-  var serverOpt: Option[ActorSelection] = None
-  implicit val timeout: Timeout = Timeout(10 minute)
-
-
-  def receive = {
-    case _=>
-  }
 }
