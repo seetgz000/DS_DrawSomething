@@ -30,7 +30,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField maxWidth="400.0" prefHeight="44.0" prefWidth="400.0">
+                  <TextField fx:id="txtName" maxWidth="400.0" prefHeight="44.0" prefWidth="400.0">
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
@@ -38,7 +38,7 @@
                         <Font size="15.0" />
                      </font>
                   </TextField>
-                  <Button maxWidth="400.0" mnemonicParsing="false" onMousePressed="#goToLobbyList" prefHeight="33.0" prefWidth="316.0" text="Play game!">
+                  <Button fx:id="btnPlay" maxWidth="400.0" mnemonicParsing="false" onMousePressed="#goToLobbyList" prefHeight="33.0" prefWidth="316.0" text="Play game!">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

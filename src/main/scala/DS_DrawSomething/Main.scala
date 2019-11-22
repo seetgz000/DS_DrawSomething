@@ -14,7 +14,8 @@ object Main extends JFXApp{
   loader.load(rootResource)
 
   val rootNode:scalafx.scene.layout.BorderPane = loader.getRoot[javafx.scene.layout.BorderPane]()
-  //val controller = loader.getController[DS_DrawSomething.controller.MainPageController#Controller]()
+  val mainController = loader.getController[DS_DrawSomething.controller.MainPageController#Controller]()
+
 
   stage = new PrimaryStage() {
     scene = new Scene() {
@@ -67,6 +68,8 @@ object Main extends JFXApp{
   def goToLobbyPage(): Unit = {
     val resource = getClass.getResourceAsStream("view/LobbyPage.fxml")
     val loader = new FXMLLoader(null, NoDependencyResolver)
+
+    //val controller = loader.getController[DS_DrawSomething.controller.LobbyPageController#Controller]()
 
     loader.load(resource)
 

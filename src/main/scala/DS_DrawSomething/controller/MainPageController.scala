@@ -9,8 +9,18 @@ import scalafx.event.ActionEvent
 class MainPageController(private val txtName:TextField,
                          private val btnPlay:Button) {
 
+
+    var userName:String = ""
+
     def goToLobbyList():Unit ={
-      Main.goToLobbyList()
+        userName = txtName.text.value
+        Main.goToLobbyList()
+
+    }
+
+    //getter for name
+    def getUserName:String = {
+      userName
     }
 
 }

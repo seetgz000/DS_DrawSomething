@@ -28,13 +28,14 @@ class LobbyPageController (private val lblLobbyName:Label,
   }
 
   def createChatBubble(): Unit ={
+    //add new labels to flow panel
     if (! txtChat.getText.isEmpty) {
       val borderHBox = new HBox(){
         padding = Insets(5, 10, 5, 10)
       }
       borderHBox.maxWidth = 340
 
-      val chatText = new Text(txtChat.getText)
+      val chatText = new Text(s"${Main.mainController.getUserName}: ${txtChat.getText}")
 
       borderHBox.getChildren.add(chatText)
       chatText.wrappingWidthProperty.set(340)
