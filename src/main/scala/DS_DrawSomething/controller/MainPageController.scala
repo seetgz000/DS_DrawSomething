@@ -1,5 +1,6 @@
 package DS_DrawSomething.controller
 
+import DS_DrawSomething.ChatClient.Join
 import scalafx.scene.control.{Button, TextField}
 import scalafxml.core.macros.sfxml
 import DS_DrawSomething.Main
@@ -13,9 +14,9 @@ class MainPageController(private val txtName:TextField,
     var userName:String = ""
 
     def goToLobbyList():Unit ={
+        //Main.clientRef ! Join(txtName.text.value)
         userName = txtName.text.value
         Main.goToLobbyList()
-
     }
 
     //getter for name

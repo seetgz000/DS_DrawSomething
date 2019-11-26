@@ -1,5 +1,11 @@
 package DS_DrawSomething
 
+import java.net.InetAddress
+
+import DS_DrawSomething.ChatMain.{getClass, rootNode, stage, system}
+import akka.actor.{ActorSystem, Props}
+import com.typesafe.config.ConfigFactory
+
 import scala.collection.JavaConverters._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
@@ -8,8 +14,14 @@ import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafx.Includes._
 import scalafx.animation.{AnimationTimer, PauseTransition}
 import scalafx.util.Duration
+//testing chat
+import java.net._
+
 
 object Main extends JFXApp{
+
+
+  //bottom are for UI
 
   val rootResource = getClass.getResourceAsStream("view/MainPage.fxml")
   val loader = new FXMLLoader(null,NoDependencyResolver)
@@ -17,7 +29,6 @@ object Main extends JFXApp{
 
   val rootNode:scalafx.scene.layout.BorderPane = loader.getRoot[javafx.scene.layout.BorderPane]()
   val mainController = loader.getController[DS_DrawSomething.controller.MainPageController#Controller]()
-
 
   stage = new PrimaryStage() {
     scene = new Scene() {
@@ -31,14 +42,26 @@ object Main extends JFXApp{
   stage.setTitle("Draw something")
 
 
+  //set global for all resource pages
+  val lobbyListResource = getClass.getResourceAsStream("view/LobbyListPage.fxml")
+  val lobbyListLoader = new FXMLLoader(null, NoDependencyResolver)
+  lobbyListLoader.load(lobbyListResource)
+  val lobbyListController = lobbyListLoader.getController[DS_DrawSomething.controller.LobbyListPageController#Controller]()
+
+  val lobbyResource = getClass.getResourceAsStream("view/LobbyPage.fxml")
+  val lobbyLoader = new FXMLLoader(null, NoDependencyResolver)
+  lobbyLoader.load(lobbyResource)
+  val lobbyController = lobbyLoader.getController[DS_DrawSomething.controller.LobbyPageController#Controller]()
+
+  val gameResource = getClass.getResourceAsStream("view/GamePage.fxml")
+  val gameLoader = new FXMLLoader(null, NoDependencyResolver)
+  gameLoader.load(gameResource)
+  val gamePageController = gameLoader.getController[DS_DrawSomething.controller.GamePageController#Controller]()
+
+
   //go to lobby list page
   def goToLobbyList(): Unit = {
-    val resource = getClass.getResourceAsStream("view/LobbyListPage.fxml")
-    val loader = new FXMLLoader(null, NoDependencyResolver)
-
-    loader.load(resource)
-
-    val rootNode:scalafx.scene.layout.StackPane = loader.getRoot[javafx.scene.layout.StackPane]()
+    val rootNode:scalafx.scene.layout.StackPane = lobbyListLoader.getRoot[javafx.scene.layout.StackPane]()
     stage.scene().setRoot(rootNode)
   }
 
@@ -57,25 +80,13 @@ object Main extends JFXApp{
 
   //got back to game page
   def goToGamePage(): Unit = {
-    val resource = getClass.getResourceAsStream("view/GamePage.fxml")
-    val loader = new FXMLLoader(null, NoDependencyResolver)
-
-    loader.load(resource)
-
-    val rootNode:scalafx.scene.layout.BorderPane = loader.getRoot[javafx.scene.layout.BorderPane]()
+    val rootNode:scalafx.scene.layout.BorderPane = gameLoader.getRoot[javafx.scene.layout.BorderPane]()
     stage.scene().setRoot(rootNode)
   }
 
   //go to lobby page
   def goToLobbyPage(): Unit = {
-    val resource = getClass.getResourceAsStream("view/LobbyPage.fxml")
-    val loader = new FXMLLoader(null, NoDependencyResolver)
-
-    //val controller = loader.getController[DS_DrawSomething.controller.LobbyPageController#Controller]()
-
-    loader.load(resource)
-
-    val rootNode:scalafx.scene.layout.BorderPane = loader.getRoot[javafx.scene.layout.BorderPane]()
+    val rootNode:scalafx.scene.layout.BorderPane = lobbyLoader.getRoot[javafx.scene.layout.BorderPane]()
     stage.scene().setRoot(rootNode)
   }
 
