@@ -1,5 +1,6 @@
 package DS_DrawSomething.controller
 
+import javafx.beans.value.ObservableValue
 import scalafx.scene.paint.Color
 import scalafx.scene.canvas.Canvas
 import scalafx.scene.control.{Button, ColorPicker, Label, ProgressIndicator, Slider, TextArea, TextField, ToggleButton, ToggleGroup}
@@ -7,8 +8,10 @@ import scalafx.scene.input.{DragEvent, MouseEvent, ScrollEvent}
 import scalafx.scene.layout.{FlowPane, VBox}
 import scalafxml.core.macros.sfxml
 import scalafx.Includes._
+import scalafx.animation.{AnimationTimer, PauseTransition}
 import scalafx.event.ActionEvent
 import scalafx.scene.Cursor
+import scalafx.util.Duration
 
 @sfxml
 class GamePageController( //at top  of page, show current round of game and the word to be guessed by players
@@ -31,6 +34,20 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val colorPicker: ColorPicker,
                           private val sliderToolSize: Slider,
                           private val lblToolSize: Label) {
+  var inter:Double = 0
+  val timer = new PauseTransition(Duration(1000))
+  timer.onFinished = {_ =>
+    inter += 0.1
+    lblToolSize.text = inter.toString
+    piTimer.setProgress(inter)
+
+    if (inter <= 1){
+      timer.playFromStart() // Wait another second, or you can opt to finish instead.
+    }
+
+  }
+  timer.play()
+
 
 
   val gc = canvasPaint.graphicsContext2D
@@ -90,8 +107,6 @@ class GamePageController( //at top  of page, show current round of game and the 
   }
 
 
-
-
   // Draw line as the user drags the mouse
   def drawCanvas(e: MouseEvent): Unit = {
     gc.fillRoundRect(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
@@ -128,5 +143,6 @@ class GamePageController( //at top  of page, show current round of game and the 
       eraserCoordinate = eraserSize / 2
     }
   }
+
 
 }
