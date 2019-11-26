@@ -23,11 +23,23 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="565.0" prefWidth="171.0" styleClass="light-grey-background" BorderPane.alignment="TOP_CENTER">
          <children>
-            <ProgressIndicator fx:id="piTimer" maxHeight="400.0" maxWidth="166.0" prefHeight="122.0" prefWidth="166.0" progress="0.0">
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <ProgressIndicator fx:id="piTimer" maxHeight="400.0" maxWidth="166.0" prefHeight="134.0" prefWidth="166.0" progress="0.0" styleClass="progress-bar">
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </ProgressIndicator>
+                  <Label fx:id="lblTimer" styleClass="lbl-text" text="timer">
+                     <StackPane.margin>
+                        <Insets bottom="10.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
-            </ProgressIndicator>
+            </StackPane>
             <FlowPane fx:id="flowPanePaintToolbar" alignment="TOP_CENTER" columnHalignment="CENTER" prefHeight="360.0" prefWidth="274.0">
                <children>
                   <Button fx:id="btnPen" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
@@ -118,6 +130,27 @@
          <children>
             <Canvas fx:id="canvasPaint" height="585.0" width="1029.0" />
             <Button fx:id="btnKickPlayer" mnemonicParsing="false" prefHeight="42.0" prefWidth="62.0" text="Kick" StackPane.alignment="TOP_LEFT" />
+            <BorderPane fx:id="borderPaneResult" prefHeight="200.0" prefWidth="200.0" styleClass="light-transparent-background">
+               <center>
+                  <VBox alignment="CENTER" maxHeight="400.0" maxWidth="300.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="lblShowWord" styleClass="lbl-text-white" text="Word: Something" />
+                        <Label fx:id="lblWInner" styleClass="lbl-text-white" text="Someone has won!" />
+                        <Label fx:id="lblSecondPlace" styleClass="lbl-text-white" text="Label" />
+                        <Label fx:id="lblThirdPlace" styleClass="lbl-text-white" text="Label" />
+                        <Button mnemonicParsing="false" onMouseClicked="#goToNextRound" prefHeight="32.0" prefWidth="161.0" text="Next Round!">
+                           <VBox.margin>
+                              <Insets top="50.0" />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="button-proceed" />
+                              <String fx:value="button-text" />
+                           </styleClass>
+                        </Button>
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
          </children>
       </StackPane>
    </center>

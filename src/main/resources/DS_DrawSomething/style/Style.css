@@ -3,8 +3,14 @@
 }
 
 .transparent-background{
-    -fx-background-color: black;
+    -fx-background-color: grey;
     -fx-opacity: 0.5;
+}
+
+///id
+.light-transparent-background{
+    -fx-background-color: #A0A0A0;
+    -fx-opacity: 0.9;
 }
 
 .grey-background{
@@ -25,6 +31,18 @@
     -fx-border-color: black ;
     -fx-border-width: 1;
 }
+
+//lbl
+.lbl-text{
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
+}
+
+.lbl-text-white{
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}
+
 
 //buttons for proceeding to next page or opening stuff?
 .button-text{
@@ -123,3 +141,34 @@
     -fx-border-color: black;
     -fx-border-radius: 10 10 10 0;
 }
+
+//for timer shiezz
+/*progress stuff */
+.progress-bar .track{
+	-fx-background-color: goldenrod ;
+}
+.progress-bar .bar{
+	-fx-accent: lime ;
+}
+
+
+/* progress indicator */
+
+.progress-indicator .indicator{
+	-fx-background-color: white  ;
+}
+
+.progress-indicator .progress {
+    -fx-background-radius: 100;
+}
+
+//hide the percentage
+.progress-indicator .percentage{
+	-fx-fill: null;
+}
+.progress-indicator .tick{
+	-fx-background-color: white;
+}
+
+
+

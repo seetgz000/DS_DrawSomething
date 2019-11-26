@@ -6,6 +6,8 @@ import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
 import scalafxml.core.{FXMLLoader, NoDependencyResolver}
 import scalafx.Includes._
+import scalafx.animation.{AnimationTimer, PauseTransition}
+import scalafx.util.Duration
 
 object Main extends JFXApp{
 
