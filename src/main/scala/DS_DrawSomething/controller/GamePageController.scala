@@ -5,7 +5,7 @@ import scalafx.scene.paint.Color
 import scalafx.scene.canvas.Canvas
 import scalafx.scene.control.{Button, ColorPicker, Label, ProgressIndicator, Slider, TextArea, TextField, ToggleButton, ToggleGroup}
 import scalafx.scene.input.{DragEvent, MouseEvent, ScrollEvent}
-import scalafx.scene.layout.{FlowPane, VBox}
+import scalafx.scene.layout.{AnchorPane, BorderPane, FlowPane, VBox}
 import scalafxml.core.macros.sfxml
 import scalafx.Includes._
 import scalafx.animation.{AnimationTimer, PauseTransition}
@@ -33,18 +33,34 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val btnEraser: Button,
                           private val colorPicker: ColorPicker,
                           private val sliderToolSize: Slider,
-                          private val lblToolSize: Label) {
-  var inter:Double = 0
+                          private val lblToolSize: Label,
+                          private val lblTimer:Label,
+                          private val borderPaneResult:BorderPane,
+                          private val lblWinner:Label,
+                          private val lblSecondPlace:Label,
+                          private val lblThirdPlace:Label,
+                          private val btnNextRound:Button) {
+
+  //set visibility of nodes
+  borderPaneResult.setVisible(false)
+
+  //start the game
+  var timerCounter:Double = 0
   val timer = new PauseTransition(Duration(1000))
   timer.onFinished = {_ =>
-    inter += 0.1
-    lblToolSize.text = inter.toString
-    piTimer.setProgress(inter)
+    timerCounter += (0.02)
+    lblTimer.text = (timerCounter*50).toInt.toString
+    piTimer.setProgress(timerCounter)
 
-    if (inter <= 1){
+    lblTimer.toFront()
+
+    if (timerCounter <= 1){
       timer.playFromStart() // Wait another second, or you can opt to finish instead.
     }
-
+    else{
+      borderPaneResult.setVisible(true)
+      lblTimer.toBack()
+    }
   }
   timer.play()
 
@@ -106,6 +122,16 @@ class GamePageController( //at top  of page, show current round of game and the 
     }
   }
 
+  def goToNextRound(e:MouseEvent): Unit ={
+    timerCounter = 0
+    borderPaneResult.setVisible(false)
+    eraseEverything(e)
+    timer.play()
+  }
+
+  def eraseEverything(e: MouseEvent): Unit = {
+    gc.clearRect(0, 0, canvasPaint.getWidth, canvasPaint.getHeight)
+  }
 
   // Draw line as the user drags the mouse
   def drawCanvas(e: MouseEvent): Unit = {
