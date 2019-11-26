@@ -48,8 +48,8 @@ class GamePageController( //at top  of page, show current round of game and the 
   var timerCounter:Double = 0
   val timer = new PauseTransition(Duration(1000))
   timer.onFinished = {_ =>
-    timerCounter += (0.02)
-    lblTimer.text = (timerCounter*50).toInt.toString
+    timerCounter += 0.02
+    lblTimer.text = (50 - timerCounter*50).toInt.toString
     piTimer.setProgress(timerCounter)
 
     lblTimer.toFront()

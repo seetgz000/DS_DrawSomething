@@ -145,21 +145,25 @@
 //for timer shiezz
 /*progress stuff */
 .progress-bar .track{
-	-fx-background-color: goldenrod ;
+	-fx-background-color: white ;
 }
 .progress-bar .bar{
-	-fx-accent: lime ;
+	-fx-background-color: lime ;
 }
 
 
 /* progress indicator */
 
 .progress-indicator .indicator{
-	-fx-background-color: white  ;
+	-fx-background-color: DodgerBlue;
+
 }
 
 .progress-indicator .progress {
-    -fx-background-radius: 100;
+    -fx-background-color: white;
+    -fx-background-radius: 50;
+    -fx-border-width:0px;
+
 }
 
 //hide the percentage
@@ -167,7 +171,7 @@
 	-fx-fill: null;
 }
 .progress-indicator .tick{
-	-fx-background-color: white;
+	-fx-background-color: DodgerBlue;
 }
 
 
