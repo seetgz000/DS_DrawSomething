@@ -25,6 +25,8 @@ class LobbyPageController (private val lblLobbyName:Label,
 
   def goToGamePage(): Unit ={
     Main.goToGamePage()
+    //start timer at game page
+    Main.gamePageController.getTimer.play()
   }
 
   def createChatBubble(): Unit ={

@@ -62,8 +62,6 @@ class GamePageController( //at top  of page, show current round of game and the 
       lblTimer.toBack()
     }
   }
-  timer.play()
-
 
 
   val gc = canvasPaint.graphicsContext2D
@@ -168,6 +166,11 @@ class GamePageController( //at top  of page, show current round of game and the 
       eraserSize = toolSize
       eraserCoordinate = eraserSize / 2
     }
+  }
+
+  //getter and setter
+  def getTimer:PauseTransition ={
+    timer
   }
 
 
