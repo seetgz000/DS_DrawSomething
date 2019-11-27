@@ -2,7 +2,6 @@ package DS_DrawSomething
 
 import java.net.InetAddress
 
-import DS_DrawSomething.ChatMain.{getClass, rootNode, stage, system}
 import akka.actor.{ActorRef, ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
 
