@@ -32,8 +32,7 @@ class LobbyPageController (private val lblLobbyName:Label,
   }
 
   def createChatBubble(): Unit ={
-
-      Main.clientRef ! SendMessage(Main.mainController.getUserName,txtChat.getText)
+    Main.clientRef ! SendMessage(Main.mainController.getUserName,txtChat.getText)
 
   }
 
