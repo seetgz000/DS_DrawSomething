@@ -1,5 +1,6 @@
 package DS_DrawSomething.controller
 
+import DS_DrawSomething.Main
 import javafx.beans.value.ObservableValue
 import scalafx.scene.paint.Color
 import scalafx.scene.canvas.Canvas
@@ -167,6 +168,13 @@ class GamePageController( //at top  of page, show current round of game and the 
       eraserCoordinate = eraserSize / 2
     }
   }
+
+  //transitioning to lobby page
+  def goToLobbyPage(): Unit ={
+    Main.goToLobbyPage()
+  }
+
+
 
   //getter and setter
   def getTimer:PauseTransition ={
