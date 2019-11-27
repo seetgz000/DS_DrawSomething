@@ -142,6 +142,26 @@
     -fx-border-radius: 10 10 10 0;
 }
 
+//chat box but green
+.chat-green{
+    -fx-text-fill: lime;
+    -fx-font-size: 20px;
+    -fx-background-insets: 0,1,1;
+    -fx-border-size: 1px;
+    -fx-border-color: lime;
+    -fx-border-radius: 10 10 10 0;
+}
+
+//chat box but red
+.chat-red{
+    -fx-text-fill: red;
+    -fx-font-size: 20px;
+    -fx-background-insets: 0,1,1;
+    -fx-border-size: 1px;
+    -fx-border-color: red;
+    -fx-border-radius: 10 10 10 0;
+}
+
 //for timer shiezz
 /*progress stuff */
 .progress-bar .track{

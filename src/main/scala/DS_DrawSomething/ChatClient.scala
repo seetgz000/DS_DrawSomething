@@ -1,6 +1,6 @@
 package DS_DrawSomething
 
-import DS_DrawSomething.ChatClient.{Join, ReceivedMessage, SendMessage}
+import DS_DrawSomething.ChatClient.{Join, JoinMessage, ReceivedMessage, SendMessage}
 import DS_DrawSomething.ChatServer.{Join, MemberList}
 import akka.actor.{Actor, ActorRef, ActorSelection}
 import scalafx.application.Platform
@@ -32,10 +32,13 @@ class ChatClient extends Actor{
         answer.foreach(x => {
           if (x == "joined"){
             Platform.runLater({
-              println("!,"+name+" joined")
+              println("!,"+name+" have joined")
+              context.become(joined)
+              SendMessage(name," ")
+              memberList.foreach(_.ref ! JoinMessage(name))
+              println(context)
             })
-            context.become(joined)
-            SendMessage(name," ")
+
           }
           else { //if cannot join , error message
             println("Cant join")
@@ -69,8 +72,13 @@ class ChatClient extends Actor{
     //when you received the message from actor
     case ReceivedMessage(name,msg)=>{
       Platform.runLater({
-        println("Can send")
         Main.lobbyController.createChatBubbleClientAtLobby(name,msg)
+      })
+    }
+
+    case JoinMessage(name)=>{
+      Platform.runLater({
+        Main.lobbyController.createJoinBubble(name)
       })
     }
 
@@ -85,4 +93,5 @@ object ChatClient{
   final case class MemberList(list: Iterable[User])
   final case class SendMessage(name:String,message:String)
   final case class ReceivedMessage(name:String,message:String)
+  final case class JoinMessage(name:String)
 }

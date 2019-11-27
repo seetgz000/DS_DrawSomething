@@ -16,20 +16,38 @@ class LobbyPageController (private val lblLobbyName:Label,
                            private val btnStartGame:Button,
                            private val txtChat:TextArea,
                            private val btnSubmitChat:Button,
-                           private val scrollPaneChat:ScrollPane){
+                           private val scrollPaneChat:ScrollPane) {
   //set spacing between chat bubbles
   vBoxChat.setSpacing(15)
 
 
-  def goToMainPage(): Unit ={
+  def goToMainPage(): Unit = {
     Main.goToMainPage()
   }
 
-  def goToGamePage(): Unit ={
+  def goToGamePage(): Unit = {
     Main.goToGamePage()
     //start timer at game page
     Main.gamePageController.getTimer.play()
   }
+
+  def createJoinBubble(name: String): Unit = {
+    //add new labels to flow panel
+    val borderHBox = new HBox() {
+      padding = Insets(5, 10, 5, 10)
+    }
+    borderHBox.maxWidth = 340
+
+    val chatText = new Text(s"$name has joined the lobby.")
+
+    borderHBox.getChildren.add(chatText)
+    chatText.wrappingWidthProperty.set(340)
+    borderHBox.getStyleClass.add("chat-green")
+    vBoxChat.getChildren.add(borderHBox)
+    //set to bottom
+    scrollPaneChat.vvalueProperty.bind(vBoxChat.heightProperty)
+  }
+
 
   def createChatBubble(): Unit ={
     Main.clientRef ! SendMessage(Main.mainController.getUserName,txtChat.getText)
@@ -50,8 +68,11 @@ class LobbyPageController (private val lblLobbyName:Label,
       chatText.wrappingWidthProperty.set(340)
       borderHBox.getStyleClass.add("chat-text")
       vBoxChat.getChildren.add(borderHBox)
-    }
+      //set to bottom
+      scrollPaneChat.vvalueProperty.bind(vBoxChat.heightProperty)}
   }
+
+
 
   //use this to set text for label ater
   //lblLobbyName.setText("Lol")

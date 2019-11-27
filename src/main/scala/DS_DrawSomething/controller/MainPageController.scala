@@ -21,7 +21,7 @@ class MainPageController(private val txtName:TextField,
     def goToLobbyList():Unit ={
             if (!txtName.text.value.isEmpty &&
               ! txtPort.text.value.isEmpty &&
-              txtIpAddress.text.value.matches("^([0-9.]+)$") && InetAddress.getByName(txtIpAddress.text.value).isReachable(500)) {
+              txtIpAddress.text.value.matches("^([0-9.]+)$")) {
                 Main.clientRef ! Join(txtIpAddress.text.value, txtPort.text.value,txtName.text.value)
                 userName = txtName.text.value
                 Main.goToLobbyPage()
