@@ -3,7 +3,7 @@ package DS_DrawSomething
 import java.net.InetAddress
 
 import DS_DrawSomething.ChatMain.{getClass, rootNode, stage, system}
-import akka.actor.{ActorSystem, Props}
+import akka.actor.{ActorRef, ActorSystem, Props}
 import com.typesafe.config.ConfigFactory
 
 import scala.collection.JavaConverters._
@@ -19,6 +19,53 @@ import java.net._
 
 
 object Main extends JFXApp{
+    /*
+  testing chat
+   */
+
+    val localhost: InetAddress = InetAddress.getLocalHost
+    val localIpAddress: String = localhost.getHostAddress
+
+    var memberSize:Int = 0
+
+    val overrideConf = ConfigFactory.parseString(
+      s"""
+         |akka {
+         |  loglevel = "INFO"
+         |
+   |  actor {
+         |    provider = "akka.remote.RemoteActorRefProvider"
+         |  }
+         |
+   |  remote {
+         |    enabled-transports = ["akka.remote.netty.tcp"]
+         |    netty.tcp {
+         |      hostname = "${localIpAddress}"
+         |      port = 0
+         |    }
+         |
+   |    log-sent-messages = on
+         |    log-received-messages = on
+         |  }
+         |
+   |}
+         |
+       """.stripMargin)
+
+    val myConf = overrideConf.withFallback(ConfigFactory.load())
+    val system = ActorSystem("chat", myConf)
+
+    val serverRef = system.actorOf(Props[ChatServer](), "server" )
+    val clientRef = system.actorOf(Props[ChatClient](), "client" )
+
+    //1. testing, ok i got this shit down, next!
+    //clientRef ! "hello"
+    //serverRef ! "hello"
+    //
+
+    //2. joining... ok success can join now
+
+    //3. test chat
 
 
   //bottom are for UI
@@ -88,6 +135,10 @@ object Main extends JFXApp{
   def goToLobbyPage(): Unit = {
     val rootNode:scalafx.scene.layout.BorderPane = lobbyLoader.getRoot[javafx.scene.layout.BorderPane]()
     stage.scene().setRoot(rootNode)
+  }
+
+  stage.onCloseRequest = handle {
+    system.terminate
   }
 
 }
