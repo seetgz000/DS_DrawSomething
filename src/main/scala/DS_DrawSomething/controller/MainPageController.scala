@@ -22,7 +22,7 @@ class MainPageController(private val txtName:TextField,
             if (!txtName.text.value.isEmpty &&
               ! txtPort.text.value.isEmpty &&
               txtIpAddress.text.value.matches("^([0-9.]+)$") && InetAddress.getByName(txtIpAddress.text.value).isReachable(500)) {
-                Main.clientRef ! Join(txtIpAddress.text.value, txtPort.text.value)
+                Main.clientRef ! Join(txtIpAddress.text.value, txtPort.text.value,txtName.text.value)
                 userName = txtName.text.value
                 Main.goToLobbyPage()
             }
@@ -30,7 +30,7 @@ class MainPageController(private val txtName:TextField,
                 new Alert(AlertType.Information, "Invalid name, please try again").showAndWait()
             }
             else if(txtPort.text.value.isEmpty || !txtPort.text.value.matches("^([0-9.]+)$")){
-                new Alert(AlertType.Information, "Invalid name, please try again").showAndWait()
+                new Alert(AlertType.Information, "Invalid port, please try again").showAndWait()
             }
             else
                 new Alert(AlertType.Information, "Invalid ip address, please try again").showAndWait()
