@@ -16,7 +16,7 @@
    <left>
       <VBox maxHeight="750.0" maxWidth="1000.0" prefHeight="800.0" prefWidth="1006.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <Button fx:id="btnBackToLobbyList" mnemonicParsing="false" onAction="#goToLobbyList" prefHeight="40.0" prefWidth="157.0" text="Back">
+            <Button fx:id="btnBackToLobbyList" mnemonicParsing="false" onAction="#goToMainPage" prefHeight="40.0" prefWidth="157.0" text="Back">
                <VBox.margin>
                   <Insets bottom="30.0" />
                </VBox.margin>
@@ -71,7 +71,7 @@
    <right>
       <VBox prefHeight="800.0" prefWidth="398.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fx:id="scrollPaneChat" prefHeight="702.0" prefWidth="398.0">
+            <ScrollPane prefHeight="702.0" prefWidth="398.0">
                <content>
                   <VBox fx:id="vBoxChat" alignment="TOP_CENTER" prefHeight="635.0" prefWidth="380.0" styleClass="background" />
                </content>

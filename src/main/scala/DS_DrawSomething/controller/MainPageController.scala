@@ -12,19 +12,24 @@ import scalafx.scene.control.Alert.AlertType
 @sfxml
 class MainPageController(private val txtName:TextField,
                          private val txtIpAddress:TextField,
+                         private val txtPort:TextField,
                          private val btnPlay:Button) {
 
 
     var userName:String = ""
 
     def goToLobbyList():Unit ={
-            if (!txtName.text.value.equals("") &&
+            if (!txtName.text.value.isEmpty &&
+              ! txtPort.text.value.isEmpty &&
               txtIpAddress.text.value.matches("^([0-9.]+)$") && InetAddress.getByName(txtIpAddress.text.value).isReachable(500)) {
-                Main.clientRef ! Join(txtIpAddress.text.value, txtName.text.value)
+                Main.clientRef ! Join(txtIpAddress.text.value, txtPort.text.value)
                 userName = txtName.text.value
                 Main.goToLobbyPage()
             }
             else if(txtName.text.value.isEmpty){
+                new Alert(AlertType.Information, "Invalid name, please try again").showAndWait()
+            }
+            else if(txtPort.text.value.isEmpty || !txtPort.text.value.matches("^([0-9.]+)$")){
                 new Alert(AlertType.Information, "Invalid name, please try again").showAndWait()
             }
             else

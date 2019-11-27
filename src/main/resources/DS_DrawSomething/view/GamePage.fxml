@@ -76,6 +76,12 @@
                      </FlowPane.margin>
                   </Slider>
                </children></FlowPane>
+            <Button mnemonicParsing="false" onAction="#goToLobbyPage" prefHeight="42.0" prefWidth="145.0" text="Quit to lobby">
+               <styleClass>
+                  <String fx:value="button-red" />
+                  <String fx:value="button-text" />
+               </styleClass>
+            </Button>
          </children>
       </VBox>
    </left>

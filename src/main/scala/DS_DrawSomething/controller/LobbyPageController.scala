@@ -21,8 +21,8 @@ class LobbyPageController (private val lblLobbyName:Label,
   vBoxChat.setSpacing(15)
 
 
-  def goToLobbyList(): Unit ={
-    Main.goToLobbyList()
+  def goToMainPage(): Unit ={
+    Main.goToMainPage()
   }
 
   def goToGamePage(): Unit ={
