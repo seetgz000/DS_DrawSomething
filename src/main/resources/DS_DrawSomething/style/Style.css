@@ -142,6 +142,17 @@
     -fx-border-radius: 10 10 10 0;
 }
 
+//chat box at game page
+.chat-text-game{
+    -fx-text-fill: black;
+    -fx-font-size: 15px;
+    -fx-background-insets: 0,1,1;
+    -fx-border-size: 1px;
+    -fx-border-color: black;
+    -fx-border-radius: 10 10 10 0;
+}
+
+
 //chat box but green
 .chat-green{
     -fx-text-fill: lime;

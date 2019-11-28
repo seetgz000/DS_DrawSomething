@@ -1,17 +1,20 @@
 package DS_DrawSomething.controller
 
+import DS_DrawSomething.ChatClient.SendMessage
 import DS_DrawSomething.Main
 import javafx.beans.value.ObservableValue
 import scalafx.scene.paint.Color
 import scalafx.scene.canvas.Canvas
-import scalafx.scene.control.{Button, ColorPicker, Label, ProgressIndicator, Slider, TextArea, TextField, ToggleButton, ToggleGroup}
+import scalafx.scene.control.{Button, ColorPicker, Label, ProgressIndicator, ScrollPane, Slider, TextArea, TextField, ToggleButton, ToggleGroup}
 import scalafx.scene.input.{DragEvent, MouseEvent, ScrollEvent}
-import scalafx.scene.layout.{AnchorPane, BorderPane, FlowPane, VBox}
+import scalafx.scene.layout.{AnchorPane, BorderPane, FlowPane, HBox, VBox}
 import scalafxml.core.macros.sfxml
 import scalafx.Includes._
 import scalafx.animation.{AnimationTimer, PauseTransition}
 import scalafx.event.ActionEvent
+import scalafx.geometry.Insets
 import scalafx.scene.Cursor
+import scalafx.scene.text.Text
 import scalafx.util.Duration
 
 @sfxml
@@ -25,6 +28,7 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val txtGameChat:TextArea,
                           private val vBoxGameChat:VBox,
                           private val btnGameSubmitChat:Button,
+                          private val scrollPaneGameChat:ScrollPane,
                           //at bottom, show players names and scores,to be added later
                           private val vVoxPlayers:VBox,
                           //at center, show canvas to be drawn on and kick button
@@ -174,11 +178,37 @@ class GamePageController( //at top  of page, show current round of game and the 
     Main.goToLobbyPage()
   }
 
-
-
   //getter and setter
   def getTimer:PauseTransition ={
     timer
+  }
+
+  //chat box methods
+  def createChatBubble(): Unit ={
+    if (! txtGameChat.getText.isEmpty) {
+      Main.clientRef ! SendMessage(Main.mainController.getUserName, txtGameChat.getText)
+    }
+    txtGameChat.text = ""
+
+  }
+
+  def createChatBubbleClientAtGame(name:String,msg:String): Unit ={
+    //add new labels to flow panel
+    val borderHBox = new HBox(){
+      padding = Insets(5, 10, 5, 10)
+      margin =  Insets(5, 10, 5, 10)
+
+    }
+    borderHBox.maxWidth = 250
+
+    val chatText = new Text(s"${name}: ${msg}")
+
+    borderHBox.getChildren.add(chatText)
+    chatText.wrappingWidthProperty.set(250)
+    borderHBox.getStyleClass.add("chat-text-game")
+    vBoxGameChat.getChildren.add(borderHBox)
+    //set to bottom
+    scrollPaneGameChat.vvalueProperty.bind(vBoxGameChat.heightProperty)
   }
 
 

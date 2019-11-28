@@ -2,7 +2,7 @@ package DS_DrawSomething.controller
 
 import DS_DrawSomething.ChatClient.{SendJoinMessage, SendMessage, SetReady}
 import DS_DrawSomething.{Main, User}
-import scalafx.geometry.Insets
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, Label, ScrollPane, TextArea}
 import scalafx.scene.layout.{FlowPane, HBox, VBox}
 import scalafx.scene.text.Text
@@ -17,6 +17,9 @@ class LobbyPageController (private val lblLobbyName:Label,
                            private val txtChat:TextArea,
                            private val btnSubmitChat:Button,
                            private val scrollPaneChat:ScrollPane) {
+
+  var isReady = false
+
   //set spacing between chat bubbles
   vBoxChat.setSpacing(15)
 
@@ -26,9 +29,22 @@ class LobbyPageController (private val lblLobbyName:Label,
 
   }
 
+  //start game button
   def goToGamePage(): Unit = {
-    Main.clientRef ! "ready"
-    Main.clientRef !  "updateList"
+    if(!isReady) {
+      Main.clientRef ! "ready"
+      Main.clientRef ! "updateList"
+
+      btnStartGame.text = "Waiting..."
+      isReady = true
+    }
+    else{
+      Main.clientRef ! "notReady"
+
+      btnStartGame.text = "Start game"
+      isReady = false
+
+    }
   }
 
   //later implement status bar to game page there and disocciation event
@@ -57,6 +73,7 @@ class LobbyPageController (private val lblLobbyName:Label,
     if (! txtChat.getText.isEmpty) {
       Main.clientRef ! SendMessage(Main.mainController.getUserName, txtChat.getText)
     }
+    txtChat.text = ""
 
   }
 
@@ -92,13 +109,10 @@ class LobbyPageController (private val lblLobbyName:Label,
       chatText = new Text(s"${user.name}    Status: preparing")
       borderHBox.getStyleClass.add("player-list-box")
 
-      println("not clicked")
-
       for (readyUser <- readyUserList) {
-        if (user.name.equals(readyUser.name)) {
+        if (user.ref.equals(readyUser.ref)) {
           chatText = new Text(s"${user.name}    Status: ready")
           borderHBox.getStyleClass.add("player-list-box-ready")
-          println("clicked")
         }
       }//end for 1st
 

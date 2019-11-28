@@ -1,6 +1,6 @@
 package DS_DrawSomething
 
-import DS_DrawSomething.ChatServer.{AddReadyMember, Join, MemberList, ReadyMemberList}
+import DS_DrawSomething.ChatServer.{AddReadyMember, Join, MemberList, ReadyMemberList, RemoveReadyMember}
 import akka.actor.{Actor, ActorRef}
 import akka.pattern.ask
 import akka.util.Timeout
@@ -53,6 +53,15 @@ class ChatServer extends Actor{
         memberList.foreach(_.ref ! "start")
       }
 
+    case RemoveReadyMember(name,ref) =>
+      readyMemberList.foreach(i=>{
+        if (i.ref.equals(ref)){
+          readyMemberList-=i
+        }
+      println("removed to "+readyMemberList.size)
+      })
+
+
     case _=>
 
   }
@@ -69,8 +78,10 @@ object ChatServer {
   final case class NameList(list: Iterable[String])
   //for player list
   final case class PlayerList(list:Iterable[User])
-  //receive added ready members
+  //receive added or removed ready members
   final case class AddReadyMember(name:String,ref:ActorRef)
+  final case class RemoveReadyMember(name:String,ref:ActorRef)
+
 
 
 }

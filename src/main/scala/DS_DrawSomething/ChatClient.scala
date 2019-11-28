@@ -104,6 +104,7 @@ class ChatClient extends Actor{
       })
     }
 
+    //tell all players in lobby that you have joined
     case SendJoinMessage(name) =>{
       memberList.foreach(_.ref ! JoinMessage(name))
     }
@@ -130,6 +131,12 @@ class ChatClient extends Actor{
         serverRef ! ChatServer.AddReadyMember(Main.mainController.getUserName, context.self)
       }
 
+    //button click tells clients its not ready, which also then notify server
+    case "notReady" =>
+      for(serverRef <- serverOpt) {
+        serverRef ! ChatServer.RemoveReadyMember(Main.mainController.getUserName, context.self)
+      }
+
     //go to game page
     case "start" =>
       memberList.foreach(_.ref ! PlayerList())
@@ -145,6 +152,17 @@ class ChatClient extends Actor{
   }
 
   def start:Receive = {
+    //send text to all actors in list
+    case ChatClient.SendMessage(name,msg) =>{
+      memberList.foreach(_ .ref ! ReceivedMessage(name,msg))
+    }
+
+    //when you received the message from actor
+    case ReceivedMessage(name,msg)=>{
+      Platform.runLater({
+        Main.gamePageController.createChatBubbleClientAtGame(name,msg)
+      })
+    }
 
     case _=>
   }
