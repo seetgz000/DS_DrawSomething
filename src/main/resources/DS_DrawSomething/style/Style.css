@@ -162,6 +162,21 @@
     -fx-border-radius: 10 10 10 0;
 }
 
+//for player list box
+.player-list-box{
+    -fx-font-size: 20px;
+    -fx-background-insets: 0,1,1;
+    -fx-border-size: 1px;
+    -fx-border-color: black;
+}
+.player-list-box-ready{
+    -fx-font-size: 20px;
+    -fx-background-insets: 0,1,1;
+    -fx-border-size: 1px;
+    -fx-border-color: lime;
+}
+
+
 //for timer shiezz
 /*progress stuff */
 .progress-bar .track{

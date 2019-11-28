@@ -46,7 +46,7 @@
                   <Insets bottom="30.0" />
                </VBox.margin>
                <content>
-                  <FlowPane fx:id="flowPanePlayers" prefHeight="474.0" prefWidth="983.0" styleClass="background" />
+                  <FlowPane fx:id="flowPanePlayers" maxWidth="983.0" prefHeight="474.0" prefWidth="983.0" styleClass="background" />
                </content>
             </ScrollPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="1000.0">

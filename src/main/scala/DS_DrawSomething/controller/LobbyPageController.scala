@@ -1,7 +1,7 @@
 package DS_DrawSomething.controller
 
-import DS_DrawSomething.ChatClient.SendMessage
-import DS_DrawSomething.Main
+import DS_DrawSomething.ChatClient.{SendJoinMessage, SendMessage, SetReady}
+import DS_DrawSomething.{Main, User}
 import scalafx.geometry.Insets
 import scalafx.scene.control.{Button, Label, ScrollPane, TextArea}
 import scalafx.scene.layout.{FlowPane, HBox, VBox}
@@ -23,14 +23,18 @@ class LobbyPageController (private val lblLobbyName:Label,
 
   def goToMainPage(): Unit = {
     Main.goToMainPage()
+
   }
 
   def goToGamePage(): Unit = {
-    Main.goToGamePage()
-    //start timer at game page
-    Main.gamePageController.getTimer.play()
+    Main.clientRef ! "ready"
+    Main.clientRef !  "updateList"
   }
 
+  //later implement status bar to game page there and disocciation event
+
+
+  // at chat box stuff
   def createJoinBubble(name: String): Unit = {
     //add new labels to flow panel
     val borderHBox = new HBox() {
@@ -50,13 +54,14 @@ class LobbyPageController (private val lblLobbyName:Label,
 
 
   def createChatBubble(): Unit ={
-    Main.clientRef ! SendMessage(Main.mainController.getUserName,txtChat.getText)
+    if (! txtChat.getText.isEmpty) {
+      Main.clientRef ! SendMessage(Main.mainController.getUserName, txtChat.getText)
+    }
 
   }
 
   def createChatBubbleClientAtLobby(name:String,msg:String): Unit ={
     //add new labels to flow panel
-    if (! txtChat.getText.isEmpty) {
       val borderHBox = new HBox(){
         padding = Insets(5, 10, 5, 10)
       }
@@ -69,12 +74,38 @@ class LobbyPageController (private val lblLobbyName:Label,
       borderHBox.getStyleClass.add("chat-text")
       vBoxChat.getChildren.add(borderHBox)
       //set to bottom
-      scrollPaneChat.vvalueProperty.bind(vBoxChat.heightProperty)}
+      scrollPaneChat.vvalueProperty.bind(vBoxChat.heightProperty)
   }
 
+  //player list
+  def generatePlayerList(userFromList:Iterable[User],readyUserList:Iterable[User]){
+    flowPanePlayers.getChildren().clear()
+    for(user<-userFromList) {        //add new labels to flow panel
+      val borderHBox = new HBox() {
+        padding = Insets(10, 10, 10, 10)
+        margin = Insets(10, 10, 10, 10)
+      }
+      borderHBox.maxWidth = 340
 
+      var chatText = new Text("")
 
-  //use this to set text for label ater
-  //lblLobbyName.setText("Lol")
+      chatText = new Text(s"${user.name}    Status: preparing")
+      borderHBox.getStyleClass.add("player-list-box")
+
+      println("not clicked")
+
+      for (readyUser <- readyUserList) {
+        if (user.name.equals(readyUser.name)) {
+          chatText = new Text(s"${user.name}    Status: ready")
+          borderHBox.getStyleClass.add("player-list-box-ready")
+          println("clicked")
+        }
+      }//end for 1st
+
+      borderHBox.getChildren.add(chatText)
+      chatText.wrappingWidthProperty.set(340)
+      flowPanePlayers.getChildren.add(borderHBox)
+    }//end for 2nd
+  }
 
 }
