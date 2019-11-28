@@ -15,7 +15,7 @@
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox maxHeight="500.0" maxWidth="400.0" prefHeight="700.0" prefWidth="401.0">
+            <VBox maxHeight="606.0" maxWidth="400.0" prefHeight="606.0" prefWidth="400.0" spacing="20.0">
                <children>
                   <ImageView fitHeight="263.0" fitWidth="397.0" pickOnBounds="true" preserveRatio="true" styleClass="title-image">
                      <VBox.margin>
@@ -30,15 +30,25 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField maxWidth="400.0" prefHeight="44.0" prefWidth="400.0">
+                  <TextField fx:id="txtName" maxWidth="400.0" prefHeight="44.0" prefWidth="400.0">
                      <VBox.margin>
-                        <Insets bottom="20.0" />
+                        <Insets />
                      </VBox.margin>
                      <font>
                         <Font size="15.0" />
                      </font>
                   </TextField>
-                  <Button maxWidth="400.0" mnemonicParsing="false" onMousePressed="#goToLobbyList" prefHeight="33.0" prefWidth="316.0" text="Play game!">
+                  <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="400.0" prefHeight="30.0" prefWidth="400.0" text="Enter IP address:" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtIpAddress" maxWidth="400.0" prefHeight="44.0" prefWidth="400.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="btnPlay" maxWidth="400.0" mnemonicParsing="false" onMousePressed="#goToLobbyList" prefHeight="33.0" prefWidth="316.0" text="Play game!">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>

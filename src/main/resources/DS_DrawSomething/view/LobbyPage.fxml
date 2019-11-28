@@ -71,9 +71,9 @@
    <right>
       <VBox prefHeight="800.0" prefWidth="398.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane prefHeight="702.0" prefWidth="398.0">
+            <ScrollPane fx:id="scrollPaneChat" prefHeight="702.0" prefWidth="398.0">
                <content>
-                  <VBox fx:id="vBoxChat" alignment="TOP_CENTER" prefHeight="725.0" prefWidth="380.0" styleClass="background" />
+                  <VBox fx:id="vBoxChat" alignment="TOP_CENTER" prefHeight="635.0" prefWidth="380.0" styleClass="background" />
                </content>
             </ScrollPane>
             <HBox prefHeight="171.0" prefWidth="315.0">
