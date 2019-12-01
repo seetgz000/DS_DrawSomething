@@ -123,10 +123,9 @@ object Main extends JFXApp{
     clientRef ! ChatClient.SendJoinMessage(Main.mainController.getUserName)
     //updates player list in lobby as soon as it joins
     clientRef ! "updateList"
+    lobbyController.setLabelName(mainController.getUserName)
     val rootNode:scalafx.scene.layout.BorderPane = lobbyLoader.getRoot[javafx.scene.layout.BorderPane]()
     stage.scene().setRoot(rootNode)
-
-
   }
 
   stage.onCloseRequest = handle {

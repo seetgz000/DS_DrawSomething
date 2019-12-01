@@ -51,6 +51,7 @@ class ChatClient extends Actor{
     case ReadyMemberList(x) =>
       readyMemberList = x
 
+    //send messages to everyone in member list
     case SendMessage(name,msg) =>{
       memberList.foreach(_.ref ! ReceivedMessage(name,msg))
     }
@@ -87,20 +88,16 @@ class ChatClient extends Actor{
 
     //when someone left the lobby
     case SomeoneLeft(name) =>
-          Platform.runLater({
-            Main.lobbyController.createQuitBubble(name)
-          })
+      Platform.runLater({
+        Main.lobbyController.createQuitBubble(name)
+      })
 
     //server updates client how many clients currently in the system
     case MemberList(x) =>
       memberList = x
-//      //updates status of players
-//      memberList.foreach(_.ref ! PlayerList())
 
     case ReadyMemberList(x) =>
       readyMemberList = x
-//      //updates status of players
-//      memberList.foreach(_.ref ! PlayerList())
 
     //send text to all actors in list
     case ChatClient.SendMessage(name,msg) =>{
@@ -156,10 +153,6 @@ class ChatClient extends Actor{
         Main.gamePageController.getTimer.play()
       })
       context.become(start)
-
-      println("server is active")
-      Main.serverRef ! "connecting"
-    case "connecting" =>
 
 
     //tell clients to quit the game

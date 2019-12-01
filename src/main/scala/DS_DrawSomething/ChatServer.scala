@@ -22,7 +22,7 @@ class ChatServer extends Actor{
   override def preStart(): Unit = {
     context.system.eventStream.subscribe(self, classOf[akka.remote.DisassociatedEvent])
     context.system.eventStream.subscribe(self, classOf[akka.remote.AssociatedEvent])
-    context.system.eventStream.subscribe(Main.serverRef, classOf[DeadLetter])
+    context.system.eventStream.subscribe(self, classOf[DeadLetter])
   }
 
   //updates lists at client's
@@ -46,24 +46,25 @@ class ChatServer extends Actor{
 
   def receive = {
 
-    case DisassociatedEvent(local, remote, _) =>
-      memberList.foreach(i =>{
-        if(i.ref.path.address == remote){
-          memberList -= i
-          readyMemberList -= i
-          memberList.foreach(_.ref ! SomeoneLeft(i.name))
+    case DisassociatedEvent(local, remote, _) => {
+      var name = " "
+
+      memberList.foreach(i => {
+        if (i.ref.path.address == remote) {
+          name = i.name
         }
       })
 
-      memberList.foreach(i =>{
-        if(i.ref.path.address == remote){
-          memberList.foreach(_.ref ! SomeoneLeft(i.name))
+      memberList.removeIf(i => i.ref.path.address == remote)
+      readyMemberList.removeIf(i => i.ref.path.address == remote)
+
+      memberList.foreach(i=>{
+        if(i.ref.path.address != remote){
+          i.ref ! SomeoneLeft(name)
         }
       })
 
-
-
-
+    }
 
     case Join(name,ref) =>
       memberList += User(name,ref)
@@ -74,13 +75,13 @@ class ChatServer extends Actor{
     //tell server its ready
     case AddReadyMember(name,ref) =>
       readyMemberList += User(name,ref)
-      println(readyMemberList.size + " "+ name)
       //if players that are ready matches total members
       if (readyMemberList.size == memberList.size){
         memberList.foreach(_.ref ! "start")
       }
 
     case RemoveReadyMember(name,ref) =>
+      println(readyMemberList.size + " "+ name)
       readyMemberList.foreach(i=>{
         if (i.ref.equals(ref)){
           readyMemberList-=i
@@ -92,13 +93,12 @@ class ChatServer extends Actor{
 
   }
 
-  def getMemberList:ObservableHashSet[User]= { memberList}
-
 
 }
 
 object ChatServer {
   final case class Join(name:String,actorOf:ActorRef)//to store Join msg itself
+  final case class TellEveryone(name:String)
   final case class MemberList(list: Iterable[User])
   final case class ReadyMemberList(list:Iterable[User])
   final case class NameList(list: Iterable[String])
