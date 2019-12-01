@@ -23,7 +23,6 @@ class LobbyPageController (private val lblLobbyName:Label,
 
 
   var isReady = false
-  lblLobbyName.setText(Main.mainController.getUserName)
 
   //set spacing between chat bubbles
   vBoxChat.setSpacing(15)

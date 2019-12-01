@@ -3,7 +3,7 @@ package DS_DrawSomething.controller
 import java.net.InetAddress
 
 import DS_DrawSomething.ChatClient.{Join, SendJoinMessage}
-import scalafx.scene.control.{Alert, Button, TextField}
+import scalafx.scene.control.{Alert, Button, Label, TextField}
 import scalafxml.core.macros.sfxml
 import DS_DrawSomething.Main
 import DS_DrawSomething.Main.system

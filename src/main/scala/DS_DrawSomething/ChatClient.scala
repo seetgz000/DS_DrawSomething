@@ -1,6 +1,6 @@
 package DS_DrawSomething
 
-import DS_DrawSomething.ChatClient.{Join, JoinMessage, PlayerList, ReceivedMessage, SendJoinMessage, SendMessage}
+import DS_DrawSomething.ChatClient.{Join, JoinMessage, PlayerList, ReceivedMessage, SendJoinMessage, SendMessage, SomeoneLeft}
 import DS_DrawSomething.ChatServer.{MemberList, ReadyMemberList}
 import akka.actor.{Actor, ActorRef, ActorSelection, DeadLetter}
 import scalafx.application.Platform
@@ -27,8 +27,6 @@ class ChatClient extends Actor{
     context.system.eventStream.subscribe(self, classOf[DeadLetter])
   }
 
-
-
   def receive = {
 
       //join the server
@@ -49,6 +47,9 @@ class ChatClient extends Actor{
     //updates the current users available in actor system
     case MemberList(x) =>
         memberList = x
+
+    case ReadyMemberList(x) =>
+      readyMemberList = x
 
     case SendMessage(name,msg) =>{
       memberList.foreach(_.ref ! ReceivedMessage(name,msg))
@@ -84,26 +85,22 @@ class ChatClient extends Actor{
   //once joined a lobby
   def joined: Receive = {
 
-    case DisassociatedEvent(local, remote, _) =>
-      memberList.foreach(x => {
-        if(x.ref.path.address == remote){
+    //when someone left the lobby
+    case SomeoneLeft(name) =>
           Platform.runLater({
-            Main.lobbyController.createQuitBubble(x.name)
+            Main.lobbyController.createQuitBubble(name)
           })
-        }
-      })
 
     //server updates client how many clients currently in the system
     case MemberList(x) =>
       memberList = x
-      //updates status of players
-      memberList.foreach(_.ref ! PlayerList())
+//      //updates status of players
+//      memberList.foreach(_.ref ! PlayerList())
 
     case ReadyMemberList(x) =>
-      println(x.size + " ready")
       readyMemberList = x
-      //updates status of players
-      memberList.foreach(_.ref ! PlayerList())
+//      //updates status of players
+//      memberList.foreach(_.ref ! PlayerList())
 
     //send text to all actors in list
     case ChatClient.SendMessage(name,msg) =>{
@@ -160,15 +157,16 @@ class ChatClient extends Actor{
       })
       context.become(start)
 
+      println("server is active")
+      Main.serverRef ! "connecting"
+    case "connecting" =>
+
+
     //tell clients to quit the game
     case "end" =>
       Platform.runLater({
         Main.mainController.endGame()
       })
-
-    case "connecting" =>
-      println("server is active")
-      Main.serverRef ! "connecting"
 
     //if message cant be sent
     case DeadLetter(msg, from, to)=>
@@ -202,6 +200,8 @@ class ChatClient extends Actor{
 
 object ChatClient{
   final case class Join(ip:String,port:String,name:String)
+  //if someone left the lobby
+  final case class SomeoneLeft(name:String)
   //to update own iterables
   final case class MemberList(list: Iterable[User])
   final case class ReadyMemberList(list:Iterable[User])

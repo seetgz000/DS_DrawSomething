@@ -1,5 +1,6 @@
 package DS_DrawSomething
 
+import DS_DrawSomething.ChatClient.{PlayerList, SomeoneLeft}
 import DS_DrawSomething.ChatServer.{AddReadyMember, Join, MemberList, ReadyMemberList, RemoveReadyMember}
 import akka.actor.{Actor, ActorRef, DeadLetter}
 import akka.pattern.ask
@@ -27,29 +28,45 @@ class ChatServer extends Actor{
   //updates lists at client's
   memberList.onChange({
     for (i <- memberList.toList){
+      //when new member added, updates readymember list toos
       i.ref ! MemberList(memberList.toList)
-      //when new member added, updates readymember list too
+      i.ref ! ReadyMemberList(readyMemberList.toList)
+      //updates status of players
+      i.ref ! PlayerList()
     }
   })
 
   readyMemberList.onChange({
     for (i<- memberList.toList){
       i.ref ! ReadyMemberList(readyMemberList.toList)
+      //updates status of players
+      i.ref ! PlayerList()
     }
   })
 
   def receive = {
+
     case DisassociatedEvent(local, remote, _) =>
-      memberList.removeIf(x => {
-        x.ref.path.address == remote
+      memberList.foreach(i =>{
+        if(i.ref.path.address == remote){
+          memberList -= i
+          readyMemberList -= i
+          memberList.foreach(_.ref ! SomeoneLeft(i.name))
+        }
       })
-      readyMemberList.removeIf(x => {
-        x.ref.path.address == remote
+
+      memberList.foreach(i =>{
+        if(i.ref.path.address == remote){
+          memberList.foreach(_.ref ! SomeoneLeft(i.name))
+        }
       })
+
+
+
+
 
     case Join(name,ref) =>
       memberList += User(name,ref)
-      println(memberList.size)
       sender ! "joined" // tell sender "joined"
       println(s"$sender have joined")
 
