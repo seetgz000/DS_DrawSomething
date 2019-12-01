@@ -21,11 +21,9 @@ class LobbyPageController (private val lblLobbyName:Label,
                            private val btnSubmitChat:Button,
                            private val scrollPaneChat:ScrollPane) {
 
-  system.scheduler.schedule(0 seconds, 5 second, Main.clientRef, "connecting")
-
 
   var isReady = false
-  lblLobbyName.text = Main.mainController.getUserName
+  lblLobbyName.setText(Main.mainController.getUserName)
 
   //set spacing between chat bubbles
   vBoxChat.setSpacing(15)
