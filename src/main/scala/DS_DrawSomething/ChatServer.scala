@@ -43,6 +43,9 @@ class ChatServer extends Actor{
       memberList.removeIf(x => {
         x.ref.path.address == remote
       })
+      readyMemberList.removeIf(x => {
+        x.ref.path.address == remote
+      })
 
     case Join(name,ref) =>
       memberList += User(name,ref)

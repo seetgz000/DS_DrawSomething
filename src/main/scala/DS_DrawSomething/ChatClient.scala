@@ -85,10 +85,13 @@ class ChatClient extends Actor{
   def joined: Receive = {
 
     case DisassociatedEvent(local, remote, _) =>
-      Platform.runLater({
-        Main.lobbyController.createQuitBubble(Main.mainController.getUserName)
+      memberList.foreach(x => {
+        if(x.ref.path.address == remote){
+          Platform.runLater({
+            Main.lobbyController.createQuitBubble(x.name)
+          })
+        }
       })
-
 
     //server updates client how many clients currently in the system
     case MemberList(x) =>
@@ -164,7 +167,7 @@ class ChatClient extends Actor{
       })
 
     case "connecting" =>
-      println("in full effect")
+      println("server is active")
       Main.serverRef ! "connecting"
 
     //if message cant be sent

@@ -50,6 +50,7 @@ class MainPageController(private val txtName:TextField,
 
     //end the whole game
     def endGame(): Unit ={
+      new Alert(AlertType.Information, "Error 404. Server is not available to process request.").showAndWait()
       system.terminate
       Platform.exit()
       println("OK")
