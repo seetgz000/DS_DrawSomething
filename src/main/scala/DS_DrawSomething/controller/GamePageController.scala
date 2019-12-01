@@ -146,21 +146,6 @@ class GamePageController( //at top  of page, show current round of game and the 
     gc.clearRect(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
   }
 
-  // Fill the Canvas with a White rectangle for reset
-  def reset: Unit = {
-      resetCanvas(Color.White)
-  }
-
-  /**
-   * Resets the canvas to its original look by filling in a rectangle covering
-   *
-   * @param color The color to fill
-   */
-  private def resetCanvas(color: Color): Unit = {
-    gc.fill = color
-    gc.fillRect(0, 0, canvasPaint.width.get, canvasPaint.height.get)
-  }
-
   def changeToolSize(size: Int, paintTool: String): Unit = {
     toolSize = size
     lblToolSize.text = toolSize.toString
