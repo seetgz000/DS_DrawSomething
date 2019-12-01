@@ -2,7 +2,7 @@ package DS_DrawSomething.controller
 
 import java.net.InetAddress
 
-import DS_DrawSomething.ChatClient.Join
+import DS_DrawSomething.ChatClient.{Join, SendJoinMessage}
 import scalafx.scene.control.{Alert, Button, TextField}
 import scalafxml.core.macros.sfxml
 import DS_DrawSomething.Main
@@ -21,16 +21,15 @@ class MainPageController(private val txtName:TextField,
     def goToLobbyList():Unit ={
             if (!txtName.text.value.isEmpty &&
               ! txtPort.text.value.isEmpty &&
-              txtIpAddress.text.value.matches("^([0-9.]+)$") && InetAddress.getByName(txtIpAddress.text.value).isReachable(500)) {
-                Main.clientRef ! Join(txtIpAddress.text.value, txtPort.text.value)
+              txtIpAddress.text.value.matches("^([0-9.]+)$")) {
+                Main.clientRef ! Join(txtIpAddress.text.value, txtPort.text.value,txtName.text.value)
                 userName = txtName.text.value
-                Main.goToLobbyPage()
             }
             else if(txtName.text.value.isEmpty){
                 new Alert(AlertType.Information, "Invalid name, please try again").showAndWait()
             }
             else if(txtPort.text.value.isEmpty || !txtPort.text.value.matches("^([0-9.]+)$")){
-                new Alert(AlertType.Information, "Invalid name, please try again").showAndWait()
+                new Alert(AlertType.Information, "Invalid port, please try again").showAndWait()
             }
             else
                 new Alert(AlertType.Information, "Invalid ip address, please try again").showAndWait()
@@ -40,6 +39,11 @@ class MainPageController(private val txtName:TextField,
     //getter for name
     def getUserName:String = {
       userName
+    }
+
+    def generateErrorMsg(): Unit ={
+        new Alert(AlertType.Information, "Invalid port or ip address, please try again").showAndWait()
+
     }
 
 }

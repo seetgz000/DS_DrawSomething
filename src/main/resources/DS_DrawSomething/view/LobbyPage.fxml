@@ -46,7 +46,7 @@
                   <Insets bottom="30.0" />
                </VBox.margin>
                <content>
-                  <FlowPane fx:id="flowPanePlayers" prefHeight="474.0" prefWidth="983.0" styleClass="background" />
+                  <FlowPane fx:id="flowPanePlayers" maxWidth="983.0" prefHeight="474.0" prefWidth="983.0" styleClass="background" />
                </content>
             </ScrollPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="1000.0">
@@ -71,7 +71,7 @@
    <right>
       <VBox prefHeight="800.0" prefWidth="398.0" BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane prefHeight="702.0" prefWidth="398.0">
+            <ScrollPane fx:id="scrollPaneChat" prefHeight="702.0" prefWidth="398.0">
                <content>
                   <VBox fx:id="vBoxChat" alignment="TOP_CENTER" prefHeight="635.0" prefWidth="380.0" styleClass="background" />
                </content>

@@ -163,15 +163,18 @@
    <right>
       <VBox alignment="BOTTOM_CENTER" prefHeight="565.0" prefWidth="300.0" BorderPane.alignment="TOP_CENTER">
          <children>
-            <ScrollPane prefHeight="1000.0" prefWidth="300.0">
+            <ScrollPane fx:id="scrollPaneGameChat" prefHeight="1000.0" prefWidth="300.0">
                <content>
-                  <VBox fx:id="vBoxGameChat" maxHeight="900.0" prefHeight="450.0" prefWidth="280.0" />
+                  <VBox fx:id="vBoxGameChat" maxHeight="900.0" prefHeight="450.0" prefWidth="280.0" styleClass="background" />
                </content>
             </ScrollPane>
             <HBox fillHeight="false" minHeight="97.0" prefWidth="300.0">
                <children>
-                  <TextArea fx:id="txtGameChat" prefHeight="97.0" prefWidth="218.0" />
-                  <Button fx:id="btnGameSubmitChat" mnemonicParsing="false" prefHeight="97.0" prefWidth="132.0" text="Submit">
+                  <TextArea fx:id="txtGameChat" prefHeight="97.0" prefWidth="218.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font></TextArea>
+                  <Button fx:id="btnGameSubmitChat" mnemonicParsing="false" onAction="#createChatBubble" prefHeight="97.0" prefWidth="132.0" text="Submit">
                      <font>
                         <Font size="18.0" />
                      </font>

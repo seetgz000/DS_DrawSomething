@@ -89,10 +89,6 @@ object Main extends JFXApp{
 
 
   //set global for all resource pages
-  val lobbyListResource = getClass.getResourceAsStream("view/LobbyListPage.fxml")
-  val lobbyListLoader = new FXMLLoader(null, NoDependencyResolver)
-  lobbyListLoader.load(lobbyListResource)
-  val lobbyListController = lobbyListLoader.getController[DS_DrawSomething.controller.LobbyListPageController#Controller]()
 
   val lobbyResource = getClass.getResourceAsStream("view/LobbyPage.fxml")
   val lobbyLoader = new FXMLLoader(null, NoDependencyResolver)
@@ -105,15 +101,7 @@ object Main extends JFXApp{
   val gamePageController = gameLoader.getController[DS_DrawSomething.controller.GamePageController#Controller]()
 
 
-  //go to lobby list page
-  def goToLobbyList(): Unit = {
-    val rootNode:scalafx.scene.layout.StackPane = lobbyListLoader.getRoot[javafx.scene.layout.StackPane]()
-    stage.scene().setRoot(rootNode)
-  }
-
-
   //got back to main page
-  //go to lobby list page
   def goToMainPage(): Unit = {
     val resource = getClass.getResourceAsStream("view/MainPage.fxml")
     val loader = new FXMLLoader(null, NoDependencyResolver)
@@ -132,8 +120,13 @@ object Main extends JFXApp{
 
   //go to lobby page
   def goToLobbyPage(): Unit = {
+    clientRef ! ChatClient.SendJoinMessage(Main.mainController.getUserName)
+    //updates player list in lobby as soon as it joins
+    clientRef ! "updateList"
     val rootNode:scalafx.scene.layout.BorderPane = lobbyLoader.getRoot[javafx.scene.layout.BorderPane]()
     stage.scene().setRoot(rootNode)
+
+
   }
 
   stage.onCloseRequest = handle {
