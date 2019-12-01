@@ -1,12 +1,15 @@
 package DS_DrawSomething.controller
 
-import DS_DrawSomething.ChatClient.{SendJoinMessage, SendMessage, SetReady}
+import DS_DrawSomething.ChatClient.{SendJoinMessage, SendMessage}
+import DS_DrawSomething.Main.system
 import DS_DrawSomething.{Main, User}
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, Label, ScrollPane, TextArea}
 import scalafx.scene.layout.{FlowPane, HBox, VBox}
 import scalafx.scene.text.Text
 import scalafxml.core.macros.sfxml
+import scala.concurrent.duration._
+import scala.concurrent.ExecutionContext.Implicits._
 
 @sfxml
 class LobbyPageController (private val lblLobbyName:Label,
@@ -18,7 +21,11 @@ class LobbyPageController (private val lblLobbyName:Label,
                            private val btnSubmitChat:Button,
                            private val scrollPaneChat:ScrollPane) {
 
+  system.scheduler.schedule(0 seconds, 5 second, Main.clientRef, "connecting")
+
+
   var isReady = false
+  lblLobbyName.text = Main.mainController.getUserName
 
   //set spacing between chat bubbles
   vBoxChat.setSpacing(15)
@@ -51,6 +58,7 @@ class LobbyPageController (private val lblLobbyName:Label,
 
 
   // at chat box stuff
+  //if member enter lobby
   def createJoinBubble(name: String): Unit = {
     //add new labels to flow panel
     val borderHBox = new HBox() {
@@ -67,6 +75,25 @@ class LobbyPageController (private val lblLobbyName:Label,
     //set to bottom
     scrollPaneChat.vvalueProperty.bind(vBoxChat.heightProperty)
   }
+
+  //if member left the lobby
+  def createQuitBubble(name: String): Unit = {
+    //add new labels to flow panel
+    val borderHBox = new HBox() {
+      padding = Insets(5, 10, 5, 10)
+    }
+    borderHBox.maxWidth = 340
+
+    val chatText = new Text(s"$name has left the lobby.")
+
+    borderHBox.getChildren.add(chatText)
+    chatText.wrappingWidthProperty.set(340)
+    borderHBox.getStyleClass.add("chat-red")
+    vBoxChat.getChildren.add(borderHBox)
+    //set to bottom
+    scrollPaneChat.vvalueProperty.bind(vBoxChat.heightProperty)
+  }
+
 
 
   def createChatBubble(): Unit ={
@@ -121,5 +148,6 @@ class LobbyPageController (private val lblLobbyName:Label,
       flowPanePlayers.getChildren.add(borderHBox)
     }//end for 2nd
   }
+
 
 }

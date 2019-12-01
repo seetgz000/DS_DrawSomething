@@ -51,7 +51,7 @@
             </ScrollPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="1000.0">
                <children>
-                  <Button fx:id="btnStartGame" mnemonicParsing="false" onAction="#goToGamePage" prefHeight="40.0" prefWidth="200.0" text="Start game">
+                  <Button fx:id="btnStartGame" alignment="CENTER" mnemonicParsing="false" onAction="#goToGamePage" prefHeight="40.0" prefWidth="200.0" text="Start game">
                      <font>
                         <Font size="18.0" />
                      </font>

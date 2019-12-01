@@ -1,8 +1,9 @@
 package DS_DrawSomething
 
 import DS_DrawSomething.ChatServer.{AddReadyMember, Join, MemberList, ReadyMemberList, RemoveReadyMember}
-import akka.actor.{Actor, ActorRef}
+import akka.actor.{Actor, ActorRef, DeadLetter}
 import akka.pattern.ask
+import akka.remote.DisassociatedEvent
 import akka.util.Timeout
 
 import scala.concurrent.duration._
@@ -20,6 +21,7 @@ class ChatServer extends Actor{
   override def preStart(): Unit = {
     context.system.eventStream.subscribe(self, classOf[akka.remote.DisassociatedEvent])
     context.system.eventStream.subscribe(self, classOf[akka.remote.AssociatedEvent])
+    context.system.eventStream.subscribe(Main.serverRef, classOf[DeadLetter])
   }
 
   //updates lists at client's
@@ -37,6 +39,11 @@ class ChatServer extends Actor{
   })
 
   def receive = {
+    case DisassociatedEvent(local, remote, _) =>
+      memberList.removeIf(x => {
+        x.ref.path.address == remote
+      })
+
     case Join(name,ref) =>
       memberList += User(name,ref)
       println(memberList.size)
@@ -58,7 +65,6 @@ class ChatServer extends Actor{
         if (i.ref.equals(ref)){
           readyMemberList-=i
         }
-      println("removed to "+readyMemberList.size)
       })
 
 

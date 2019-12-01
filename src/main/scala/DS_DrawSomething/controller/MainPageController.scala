@@ -6,6 +6,8 @@ import DS_DrawSomething.ChatClient.{Join, SendJoinMessage}
 import scalafx.scene.control.{Alert, Button, TextField}
 import scalafxml.core.macros.sfxml
 import DS_DrawSomething.Main
+import DS_DrawSomething.Main.system
+import scalafx.application.Platform
 import scalafx.event.ActionEvent
 import scalafx.scene.control.Alert.AlertType
 
@@ -31,7 +33,7 @@ class MainPageController(private val txtName:TextField,
             else if(txtPort.text.value.isEmpty || !txtPort.text.value.matches("^([0-9.]+)$")){
                 new Alert(AlertType.Information, "Invalid port, please try again").showAndWait()
             }
-            else
+            else if(txtIpAddress.text.value.isEmpty || !txtIpAddress.text.value.matches("^([0-9.]+)$"))
                 new Alert(AlertType.Information, "Invalid ip address, please try again").showAndWait()
 
     }
@@ -43,7 +45,14 @@ class MainPageController(private val txtName:TextField,
 
     def generateErrorMsg(): Unit ={
         new Alert(AlertType.Information, "Invalid port or ip address, please try again").showAndWait()
+    }
 
+
+    //end the whole game
+    def endGame(): Unit ={
+      system.terminate
+      Platform.exit()
+      println("OK")
     }
 
 }

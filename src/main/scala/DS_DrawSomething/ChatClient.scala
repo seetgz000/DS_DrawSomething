@@ -1,14 +1,12 @@
 package DS_DrawSomething
 
-import DS_DrawSomething.ChatClient.{Join, JoinMessage, PlayerList, ReceivedMessage, SendJoinMessage, SendMessage, SetReady}
-import DS_DrawSomething.ChatServer.{MemberList,ReadyMemberList}
-import akka.actor.{Actor, ActorRef, ActorSelection}
+import DS_DrawSomething.ChatClient.{Join, JoinMessage, PlayerList, ReceivedMessage, SendJoinMessage, SendMessage}
+import DS_DrawSomething.ChatServer.{MemberList, ReadyMemberList}
+import akka.actor.{Actor, ActorRef, ActorSelection, DeadLetter}
 import scalafx.application.Platform
 import akka.pattern.ask
+import akka.remote.DisassociatedEvent
 import akka.util.Timeout
-import scalafx.collections.ObservableHashSet
-import scalafx.scene.control.Alert
-import scalafx.scene.control.Alert.AlertType
 
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits._
@@ -23,7 +21,12 @@ class ChatClient extends Actor{
   var readyMemberList = Iterable[User]()
 
 
-  var isReady = false
+
+  override def preStart(): Unit = {
+    context.system.eventStream.subscribe(self, classOf[akka.remote.DisassociatedEvent])
+    context.system.eventStream.subscribe(self, classOf[DeadLetter])
+  }
+
 
 
   def receive = {
@@ -40,16 +43,10 @@ class ChatClient extends Actor{
             })
             context.become(joined)
           }
-          else { //if cannot join , error message
-            println("Cant join")
-            Platform.runLater({
-              Main.mainController.generateErrorMsg()
-            })
-          }
         })
       }
 
-//    //updates the current users available in actor system
+    //updates the current users available in actor system
     case MemberList(x) =>
         memberList = x
 
@@ -61,7 +58,6 @@ class ChatClient extends Actor{
       memberList.foreach(_.ref ! JoinMessage(name))
     }
 
-
     //when you received the message from actor
     case ReceivedMessage(name,msg)=>{
       Platform.runLater({
@@ -69,11 +65,16 @@ class ChatClient extends Actor{
       })
     }
 
-    case PlayerList()=>{
+    case PlayerList()=>
       Platform.runLater({
           Main.lobbyController.generatePlayerList(memberList,readyMemberList)
       })
-    }
+
+    //if message cant be sent
+    case DeadLetter(msg, from, to)=>
+      Platform.runLater({
+        Main.mainController.generateErrorMsg()
+      })
 
     case _=>
 
@@ -82,9 +83,18 @@ class ChatClient extends Actor{
 
   //once joined a lobby
   def joined: Receive = {
+
+    case DisassociatedEvent(local, remote, _) =>
+      Platform.runLater({
+        Main.lobbyController.createQuitBubble(Main.mainController.getUserName)
+      })
+
+
     //server updates client how many clients currently in the system
     case MemberList(x) =>
       memberList = x
+      //updates status of players
+      memberList.foreach(_.ref ! PlayerList())
 
     case ReadyMemberList(x) =>
       println(x.size + " ready")
@@ -121,6 +131,7 @@ class ChatClient extends Actor{
       })
     }
 
+    //updates the player list
     case "updateList" =>{
       memberList.foreach(_.ref ! PlayerList())
     }
@@ -146,11 +157,27 @@ class ChatClient extends Actor{
       })
       context.become(start)
 
+    //tell clients to quit the game
+    case "end" =>
+      Platform.runLater({
+        Main.mainController.endGame()
+      })
+
+    case "connecting" =>
+      println("in full effect")
+      Main.serverRef ! "connecting"
+
+    //if message cant be sent
+    case DeadLetter(msg, from, to)=>
+      Platform.runLater({
+        Main.mainController.endGame()
+      })
 
     case _=>
 
   }
 
+  //when go to game page and start playing the game
   def start:Receive = {
     //send text to all actors in list
     case ChatClient.SendMessage(name,msg) =>{
@@ -183,5 +210,4 @@ object ChatClient{
   final case class JoinMessage(name:String)
   final case class PlayerList()
   //
-  final case class SetReady()
 }
