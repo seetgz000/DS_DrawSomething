@@ -28,7 +28,7 @@
                   <String fx:value="button-red" />
                </styleClass>
             </Button>
-            <Label fx:id="lblLobbyName" prefHeight="54.0" prefWidth="372.0" text="Lobby name(change later)">
+            <Label fx:id="lblUserName" prefHeight="54.0" prefWidth="372.0" text="Lobby name(change later)">
                <font>
                   <Font size="30.0" />
                </font>

@@ -53,7 +53,6 @@ class MainPageController(private val txtName:TextField,
       new Alert(AlertType.Information, "Error 404. Server is not available to process request.").showAndWait()
       system.terminate
       Platform.exit()
-      println("OK")
     }
 
 }

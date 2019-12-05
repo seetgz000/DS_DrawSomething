@@ -12,7 +12,7 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits._
 
 @sfxml
-class LobbyPageController (private val lblLobbyName:Label,
+class LobbyPageController (private val lblUserName:Label,
                             private val flowPanePlayers:FlowPane,
                            private val vBoxChat: VBox,
                            private val btnBackToLobbyList:Button,
@@ -27,10 +27,13 @@ class LobbyPageController (private val lblLobbyName:Label,
   //set spacing between chat bubbles
   vBoxChat.setSpacing(15)
 
+  //set label user name at lobby page
+  def setLabelName(name:String): Unit ={
+    lblUserName.setText("Your name: "+name)
+  }
 
   def goToMainPage(): Unit = {
     Main.goToMainPage()
-
   }
 
   //start game button
@@ -50,9 +53,6 @@ class LobbyPageController (private val lblLobbyName:Label,
 
     }
   }
-
-  //later implement status bar to game page there and disocciation event
-
 
   // at chat box stuff
   //if member enter lobby
