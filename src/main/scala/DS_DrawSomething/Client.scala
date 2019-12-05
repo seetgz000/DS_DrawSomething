@@ -154,6 +154,7 @@ class Client extends Actor{
       Platform.runLater({
         Main.goToGamePage()
         Main.gamePageController.getTimer.play()
+        Main.gamePageController.generateGamePlayerList(memberList,readyMemberList)
       })
       context.become(start)
 

@@ -121,20 +121,7 @@
       <StackPane prefWidth="1500.0" BorderPane.alignment="BOTTOM_CENTER">
          <children>
             <AnchorPane styleClass="transparent-background" />
-            <HBox prefWidth="1500.0">
-               <children>
-                  <HBox fx:id="vBoxPlayers" prefHeight="16.0" prefWidth="1500.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="150.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="200.0" />
-                        <Label prefHeight="76.0" prefWidth="646.0" text="&lt;- for scale of players name, later add dynamically at controlller">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-            </HBox>
+            <HBox fx:id="hBoxPlayers" prefWidth="1500.0" />
          </children>
       </StackPane>
    </bottom>

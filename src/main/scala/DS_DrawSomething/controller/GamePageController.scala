@@ -1,7 +1,7 @@
 package DS_DrawSomething.controller
 
 import DS_DrawSomething.Client.SendMessage
-import DS_DrawSomething.Main
+import DS_DrawSomething.{Main, User}
 import javafx.beans.value.ObservableValue
 import scalafx.scene.paint.Color
 import scalafx.scene.canvas.Canvas
@@ -33,7 +33,6 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val vVoxPlayers:VBox,
                           //at center, show canvas to be drawn on and kick button
                           private val canvasPaint:Canvas,
-                          private val btnKickPlayer: Button,
                           private val btnPen: Button,
                           private val btnEraser: Button,
                           private val colorPicker: ColorPicker,
@@ -44,7 +43,8 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val lblWinner:Label,
                           private val lblSecondPlace:Label,
                           private val lblThirdPlace:Label,
-                          private val btnNextRound:Button) {
+                          private val btnNextRound:Button,
+                          private val hBoxPlayers: HBox) {
 
   //set visibility of nodes
   borderPaneResult.setVisible(false)
@@ -81,10 +81,10 @@ class GamePageController( //at top  of page, show current round of game and the 
   colorPicker.value = Color.Black
   gc.fill = Color.Black
 
+  var role = "player"
 
   btnPen.setCursor(Cursor.Hand)
   btnEraser.setCursor(Cursor.Hand)
-  btnKickPlayer.setCursor(Cursor.Hand)
   btnGameSubmitChat.setCursor(Cursor.Hand)
 
   sliderToolSize.valueProperty.addListener{ (o: javafx.beans.value.ObservableValue[_ <: Number], oldVal: Number, newVal: Number) =>
@@ -124,15 +124,23 @@ class GamePageController( //at top  of page, show current round of game and the 
       eraser(e)
     }
   }
-  var penX: Double = 0
-  var penY: Double = 0
-  var penW: Double = 0
-  var penH: Double = 0
-  var penArcWidth: Double = 0
-  var penArcHeight: Double = 0
+//  var penX: Double = 0
+//  var penY: Double = 0
+//  var penW: Double = 0
+//  var penH: Double = 0
+//  var penArcWidth: Double = 0
+//  var penArcHeight: Double = 0
+//  var eraserX: Double = 0
+//  var eraserY: Double = 0
+//  var eraserW: Double = 0
+//  var eraserH: Double = 0
 
-  def testDraw(penX: Double, penY: Double,  penW: Double, penH: Double, penArcWidth: Double, penArcHeight: Double): Unit ={
+  def updateCanvas(penX: Double, penY: Double, penW: Double, penH: Double, penArcWidth: Double, penArcHeight: Double): Unit ={
     gc.fillRoundRect(penX, penY, penW, penH, penArcWidth, penArcHeight)
+  }
+
+  def updateCanvas(eraserX: Double, eraserY: Double, eraserW: Double, eraserH: Double): Unit ={
+    gc.clearRect(eraserX, eraserY, eraserW, eraserH)
   }
 
   def goToNextRound(e:MouseEvent): Unit ={
@@ -149,18 +157,23 @@ class GamePageController( //at top  of page, show current round of game and the 
   // Draw line as the user drags the mouse
   def drawCanvas(e: MouseEvent): Unit = {
     gc.fillRoundRect(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
-    penX = e.x - penCoordinate + 50
-    penY = e.y - penCoordinate + 50
-    penW = penSize + 5
-    penH = penSize + 5
-    penArcWidth = penSize + 5
-    penArcHeight = penSize + 5
-//    testDraw(penX, penY, penW, penH, penArcWidth, penArcHeight)
+//    penX = e.x - penCoordinate
+//    penY = e.y - penCoordinate
+//    penW = penSize
+//    penH = penSize
+//    penArcWidth = penSize
+//    penArcHeight = penSize
+    updateCanvas(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
   }
 
   // Clear away portions as the user drags the mouse
   def eraser(e: MouseEvent): Unit = {
     gc.clearRect(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
+//    eraserX = e.x - eraserCoordinate
+//    eraserY = e.y - eraserCoordinate
+//    eraserW = eraserSize
+//    eraserH = eraserSize
+    updateCanvas(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
   }
 
   def changeToolSize(size: Int, paintTool: String): Unit = {
@@ -211,6 +224,32 @@ class GamePageController( //at top  of page, show current round of game and the 
     vBoxGameChat.getChildren.add(borderHBox)
     //set to bottom
     scrollPaneGameChat.vvalueProperty.bind(vBoxGameChat.heightProperty)
+  }
+
+  def generateGamePlayerList(userFromList:Iterable[User],readyUserList:Iterable[User]){
+    hBoxPlayers.getChildren().clear()
+    for(user<-userFromList) {        //add new labels to flow panel
+      val borderVBox = new VBox() {
+        padding = Insets(10, 10, 10, 10)
+        margin = Insets(10, 10, 10, 10)
+      }
+      borderVBox.maxWidth = 200
+      borderVBox.maxHeight = 150
+
+      var chatText = new Text("")
+
+      if (user == userFromList.head) {
+        role = "Painter"
+      } else {
+        role = "Player"
+      }
+      chatText = new Text(s"${user.name} - ${role}")
+      borderVBox.getStyleClass.add("player-list-box")
+
+      borderVBox.getChildren.add(chatText)
+      chatText.wrappingWidthProperty.set(200)
+      hBoxPlayers.getChildren.add(borderVBox)
+    }//end for 2nd
   }
 
 
