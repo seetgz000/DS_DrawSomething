@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
@@ -19,7 +26,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DS_DrawSomething.controller.GamePageController">
+<BorderPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" styleClass="background" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DS_DrawSomething.controller.GamePageController">
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="565.0" prefWidth="171.0" styleClass="light-grey-background" BorderPane.alignment="TOP_CENTER">
          <children>
@@ -135,7 +142,6 @@
       <StackPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Canvas fx:id="canvasPaint" height="585.0" width="1029.0" />
-            <Button fx:id="btnKickPlayer" mnemonicParsing="false" prefHeight="42.0" prefWidth="62.0" text="Kick" StackPane.alignment="TOP_LEFT" />
             <BorderPane fx:id="borderPaneResult" prefHeight="200.0" prefWidth="200.0" styleClass="light-transparent-background">
                <center>
                   <VBox alignment="CENTER" maxHeight="400.0" maxWidth="300.0" prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
