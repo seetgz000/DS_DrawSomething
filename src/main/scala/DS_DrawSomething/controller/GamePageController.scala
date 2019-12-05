@@ -1,6 +1,6 @@
 package DS_DrawSomething.controller
 
-import DS_DrawSomething.ChatClient.SendMessage
+import DS_DrawSomething.Client.SendMessage
 import DS_DrawSomething.Main
 import javafx.beans.value.ObservableValue
 import scalafx.scene.paint.Color
@@ -124,6 +124,16 @@ class GamePageController( //at top  of page, show current round of game and the 
       eraser(e)
     }
   }
+  var penX: Double = 0
+  var penY: Double = 0
+  var penW: Double = 0
+  var penH: Double = 0
+  var penArcWidth: Double = 0
+  var penArcHeight: Double = 0
+
+  def testDraw(penX: Double, penY: Double,  penW: Double, penH: Double, penArcWidth: Double, penArcHeight: Double): Unit ={
+    gc.fillRoundRect(penX, penY, penW, penH, penArcWidth, penArcHeight)
+  }
 
   def goToNextRound(e:MouseEvent): Unit ={
     timerCounter = 0
@@ -139,6 +149,13 @@ class GamePageController( //at top  of page, show current round of game and the 
   // Draw line as the user drags the mouse
   def drawCanvas(e: MouseEvent): Unit = {
     gc.fillRoundRect(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
+    penX = e.x - penCoordinate + 50
+    penY = e.y - penCoordinate + 50
+    penW = penSize + 5
+    penH = penSize + 5
+    penArcWidth = penSize + 5
+    penArcHeight = penSize + 5
+//    testDraw(penX, penY, penW, penH, penArcWidth, penArcHeight)
   }
 
   // Clear away portions as the user drags the mouse

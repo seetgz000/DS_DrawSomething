@@ -52,10 +52,10 @@ object Main extends JFXApp{
        """.stripMargin)
 
     val myConf = overrideConf.withFallback(ConfigFactory.load())
-    val system = ActorSystem("chat", myConf)
+    val system = ActorSystem("drawSomething", myConf)
 
-    val serverRef = system.actorOf(Props[ChatServer](), "server" )
-    val clientRef = system.actorOf(Props[ChatClient](), "client" )
+    val serverRef = system.actorOf(Props[DS_DrawSomething.Server](), "server" )
+    val clientRef = system.actorOf(Props[DS_DrawSomething.Client](), "client" )
 
     //1. testing, ok i got this shit down, next!
     //clientRef ! "hello"
@@ -120,7 +120,7 @@ object Main extends JFXApp{
 
   //go to lobby page
   def goToLobbyPage(): Unit = {
-    clientRef ! ChatClient.SendJoinMessage(Main.mainController.getUserName)
+    clientRef ! DS_DrawSomething.Client.SendJoinMessage(Main.mainController.getUserName)
     //updates player list in lobby as soon as it joins
     clientRef ! "updateList"
     val rootNode:scalafx.scene.layout.BorderPane = lobbyLoader.getRoot[javafx.scene.layout.BorderPane]()

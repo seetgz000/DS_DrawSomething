@@ -1,6 +1,6 @@
 package DS_DrawSomething.controller
 
-import DS_DrawSomething.ChatClient.{SendJoinMessage, SendMessage}
+import DS_DrawSomething.Client.{SendJoinMessage, SendMessage}
 import DS_DrawSomething.Main.system
 import DS_DrawSomething.{Main, User}
 import scalafx.geometry.{Insets, Pos}
