@@ -22,7 +22,6 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val lblGameRounds:Label,
                           private val lblShowWord:Label,
                           // at the left side of page, include timer and (soon to be added toolbar for brushes)
-                          private val piTimer:ProgressIndicator,
                           private val flowPanePaintToolbar:FlowPane,
                           //at tight side, show textbox components
                           private val txtGameChat:TextArea,
@@ -38,37 +37,10 @@ class GamePageController( //at top  of page, show current round of game and the 
                           private val colorPicker: ColorPicker,
                           private val sliderToolSize: Slider,
                           private val lblToolSize: Label,
-                          private val lblTimer:Label,
-                          private val borderPaneResult:BorderPane,
-                          private val lblWinner:Label,
-                          private val lblSecondPlace:Label,
-                          private val lblThirdPlace:Label,
-                          private val btnNextRound:Button,
                           private val hBoxPlayers: HBox) {
 
-  //set visibility of nodes
-  borderPaneResult.setVisible(false)
 
   //start the game
-  var timerCounter:Double = 0
-  val timer = new PauseTransition(Duration(1000))
-  timer.onFinished = {_ =>
-    timerCounter += 0.02
-    lblTimer.text = (50 - timerCounter*50).toInt.toString
-    piTimer.setProgress(timerCounter)
-
-    lblTimer.toFront()
-
-    if (timerCounter <= 1){
-      timer.playFromStart() // Wait another second, or you can opt to finish instead.
-    }
-    else{
-      borderPaneResult.setVisible(true)
-      lblTimer.toBack()
-    }
-  }
-
-
   val gc = canvasPaint.graphicsContext2D
   sliderToolSize.value = 5 //set default tool size to 5
   var toolSize = sliderToolSize.value.toInt
@@ -80,6 +52,7 @@ class GamePageController( //at top  of page, show current round of game and the 
   var paintTool = "pen"
   colorPicker.value = Color.Black
   gc.fill = Color.Black
+
 
   var role = "player"
 
@@ -127,34 +100,12 @@ class GamePageController( //at top  of page, show current round of game and the 
       Main.clientRef ! SendEraseData(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
     }
   }
-//  var penX: Double = 0
-//  var penY: Double = 0
-//  var penW: Double = 0
-//  var penH: Double = 0
-//  var penArcWidth: Double = 0
-//  var penArcHeight: Double = 0
-//  var eraserX: Double = 0
-//  var eraserY: Double = 0
-//  var eraserW: Double = 0
-//  var eraserH: Double = 0
-
   def updateCanvas(penX: Double, penY: Double, penW: Double, penH: Double, penArcWidth: Double, penArcHeight: Double): Unit ={
-    println(penX, penY, penW, penH, penArcWidth, penArcHeight)
-    print("success")
     gc.fillRoundRect(penX, penY, penW, penH, penArcWidth, penArcHeight)
   }
 
   def updateCanvas(eraserX: Double, eraserY: Double, eraserW: Double, eraserH: Double): Unit ={
-    print(eraserX, eraserY, eraserW, eraserH)
-    print("success")
     gc.clearRect(eraserX, eraserY, eraserW, eraserH)
-  }
-
-  def goToNextRound(e:MouseEvent): Unit ={
-    timerCounter = 0
-    borderPaneResult.setVisible(false)
-    eraseEverything(e)
-    timer.play()
   }
 
   def eraseEverything(e: MouseEvent): Unit = {
@@ -164,31 +115,19 @@ class GamePageController( //at top  of page, show current round of game and the 
   // Draw line as the user drags the mouse
   def drawCanvas(e: MouseEvent): Unit = {
     gc.fillRoundRect(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
-//    penX = e.x - penCoordinate
-//    penY = e.y - penCoordinate
-//    penW = penSize
-//    penH = penSize
-//    penArcWidth = penSize
-//    penArcHeight = penSize
-//    updateCanvas(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
   }
 
   // Clear away portions as the user drags the mouse
   def eraser(e: MouseEvent): Unit = {
     gc.clearRect(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
-//    eraserX = e.x - eraserCoordinate
-//    eraserY = e.y - eraserCoordinate
-//    eraserW = eraserSize
-//    eraserH = eraserSize
-//    updateCanvas(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
   }
 
-  def sendDraw(e: MouseEvent): Unit ={
-    Main.clientRef ! SendDrawData(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
-  }
-  def sendErase(e: MouseEvent): Unit ={
-    Main.clientRef ! SendEraseData(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
-  }
+//  def sendDraw(e: MouseEvent): Unit ={
+//    Main.clientRef ! SendDrawData(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
+//  }
+//  def sendErase(e: MouseEvent): Unit ={
+//    Main.clientRef ! SendEraseData(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
+//  }
 
   def changeToolSize(size: Int, paintTool: String): Unit = {
     toolSize = size
@@ -205,11 +144,6 @@ class GamePageController( //at top  of page, show current round of game and the 
   //transitioning to lobby page
   def goToLobbyPage(): Unit ={
     Main.goToLobbyPage()
-  }
-
-  //getter and setter
-  def getTimer:PauseTransition ={
-    timer
   }
 
   //chat box methods
@@ -252,12 +186,12 @@ class GamePageController( //at top  of page, show current round of game and the 
 
       var chatText = new Text("")
 
-      if (user == userFromList.head) {
-        role = "Painter"
-      } else {
-        role = "Player"
-      }
-      chatText = new Text(s"${user.name} - ${role}")
+//      if (user == userFromList.head) {
+//        role = "Painter"
+//      } else {
+//        role = "Player"
+//      }
+      chatText = new Text(s"${user.name}")
       borderVBox.getStyleClass.add("player-list-box")
 
       borderVBox.getChildren.add(chatText)

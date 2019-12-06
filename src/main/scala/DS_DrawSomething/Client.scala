@@ -7,6 +7,7 @@ import scalafx.application.Platform
 import akka.pattern.ask
 import akka.remote.DisassociatedEvent
 import akka.util.Timeout
+import scalafx.scene.paint.Color
 
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits._
@@ -153,7 +154,6 @@ class Client extends Actor{
       memberList.foreach(_.ref ! PlayerList())
       Platform.runLater({
         Main.goToGamePage()
-        Main.gamePageController.getTimer.play()
         Main.gamePageController.generateGamePlayerList(memberList,readyMemberList)
       })
       context.become(start)
