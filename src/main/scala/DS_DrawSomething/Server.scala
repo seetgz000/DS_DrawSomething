@@ -47,19 +47,22 @@ class Server extends Actor{
   def receive = {
 
     case DisassociatedEvent(local, remote, _) =>
-      memberList.foreach(i =>{
-        if(i.ref.path.address == remote){
-          memberList -= i
-          readyMemberList -= i
-          memberList.foreach(_.ref ! SomeoneLeft(i.name))
-        }
-      })
+      var name = ""
 
       memberList.foreach(i =>{
         if(i.ref.path.address == remote){
-          memberList.foreach(_.ref ! SomeoneLeft(i.name))
+          name = i.name
         }
       })
+
+      memberList.removeIf(i=>i.ref.path.address == remote)
+      readyMemberList.removeIf(i=>i.ref.path.address == remote)
+
+//      memberList.foreach(i =>{
+//        if(i.ref.path.address != remote){
+//          i.ref ! SomeoneLeft(name)
+//        }
+//      })
 
 
 
