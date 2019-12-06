@@ -1,6 +1,6 @@
 package DS_DrawSomething.controller
 
-import DS_DrawSomething.Client.SendMessage
+import DS_DrawSomething.Client.{SendDrawData, SendEraseData, SendMessage}
 import DS_DrawSomething.{Main, User}
 import javafx.beans.value.ObservableValue
 import scalafx.scene.paint.Color
@@ -111,17 +111,20 @@ class GamePageController( //at top  of page, show current round of game and the 
   canvasPaint.onMouseDragged() = (e: MouseEvent) => {
     if (paintTool == "pen"){
       drawCanvas(e)
+      Main.clientRef ! SendDrawData(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
     } else if (paintTool == "eraser") {
       eraser(e)
+      Main.clientRef ! SendEraseData(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
     }
   }
 
-  // Fill the Canvas with a Blue rectangle when the user double-clicks
   canvasPaint.onMouseClicked() = (e: MouseEvent) => {
     if (paintTool == "pen"){
       drawCanvas(e)
+      Main.clientRef ! SendDrawData(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
     } else if (paintTool == "eraser") {
       eraser(e)
+      Main.clientRef ! SendEraseData(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
     }
   }
 //  var penX: Double = 0
@@ -136,10 +139,14 @@ class GamePageController( //at top  of page, show current round of game and the 
 //  var eraserH: Double = 0
 
   def updateCanvas(penX: Double, penY: Double, penW: Double, penH: Double, penArcWidth: Double, penArcHeight: Double): Unit ={
+    println(penX, penY, penW, penH, penArcWidth, penArcHeight)
+    print("success")
     gc.fillRoundRect(penX, penY, penW, penH, penArcWidth, penArcHeight)
   }
 
   def updateCanvas(eraserX: Double, eraserY: Double, eraserW: Double, eraserH: Double): Unit ={
+    print(eraserX, eraserY, eraserW, eraserH)
+    print("success")
     gc.clearRect(eraserX, eraserY, eraserW, eraserH)
   }
 
@@ -163,7 +170,7 @@ class GamePageController( //at top  of page, show current round of game and the 
 //    penH = penSize
 //    penArcWidth = penSize
 //    penArcHeight = penSize
-    updateCanvas(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
+//    updateCanvas(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
   }
 
   // Clear away portions as the user drags the mouse
@@ -173,7 +180,14 @@ class GamePageController( //at top  of page, show current round of game and the 
 //    eraserY = e.y - eraserCoordinate
 //    eraserW = eraserSize
 //    eraserH = eraserSize
-    updateCanvas(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
+//    updateCanvas(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
+  }
+
+  def sendDraw(e: MouseEvent): Unit ={
+    Main.clientRef ! SendDrawData(e.x - penCoordinate, e.y - penCoordinate, penSize, penSize, penSize, penSize)
+  }
+  def sendErase(e: MouseEvent): Unit ={
+    Main.clientRef ! SendEraseData(e.x - eraserCoordinate, e.y - eraserCoordinate, eraserSize, eraserSize)
   }
 
   def changeToolSize(size: Int, paintTool: String): Unit = {

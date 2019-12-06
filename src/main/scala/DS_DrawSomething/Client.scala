@@ -1,6 +1,6 @@
 package DS_DrawSomething
 
-import DS_DrawSomething.Client.{Join, JoinMessage, PlayerList, ReceivedMessage, SendJoinMessage, SendMessage, SomeoneLeft}
+import DS_DrawSomething.Client.{Join, JoinMessage, PlayerList, ReceivedDrawData, ReceivedEraseData, ReceivedMessage, SendDrawData, SendEraseData, SendJoinMessage, SendMessage, SomeoneLeft}
 import DS_DrawSomething.Server.{MemberList, ReadyMemberList}
 import akka.actor.{Actor, ActorRef, ActorSelection, DeadLetter}
 import scalafx.application.Platform
@@ -193,6 +193,30 @@ class Client extends Actor{
       })
     }
 
+    //send paint data to all actors in list
+    case Client.SendDrawData(x, y, w, h, aw, ah) =>{
+      memberList.foreach(_ .ref ! ReceivedDrawData(x, y, w, h, aw, ah))
+    }
+
+    //when you received the message from actor
+    case ReceivedDrawData(x, y, w, h, aw, ah)=>{
+      Platform.runLater({
+        Main.gamePageController.updateCanvas(x, y, w, h, aw, ah)
+      })
+    }
+
+    //send erase data to all actors in list
+    case Client.SendEraseData(x, y, w, h) =>{
+      memberList.foreach(_ .ref ! ReceivedEraseData(x, y, w, h))
+    }
+
+    //when you received the message from actor
+    case ReceivedEraseData(x, y, w, h)=>{
+      Platform.runLater({
+        Main.gamePageController.updateCanvas(x, y, w, h)
+      })
+    }
+
     case _=>
   }
 
@@ -213,5 +237,9 @@ object Client{
   final case class SendJoinMessage(name:String)
   final case class JoinMessage(name:String)
   final case class PlayerList()
+  final case class SendDrawData(penX: Double, penY: Double, penW: Double, penH: Double, penArcWidth: Double, penArcHeight: Double)
+  final case class SendEraseData(eraserX: Double, eraserY: Double, eraserW: Double, eraserH: Double)
+  final case class ReceivedDrawData(penX: Double, penY: Double, penW: Double, penH: Double, penArcWidth: Double, penArcHeight: Double)
+  final case class ReceivedEraseData(eraserX: Double, eraserY: Double, eraserW: Double, eraserH: Double)
   //
 }
